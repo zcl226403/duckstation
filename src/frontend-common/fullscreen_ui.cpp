@@ -4223,7 +4223,7 @@ void DrawAchievementWindow()
       }
       else
       {
-        text.Format("您已解锁 %u 项成就（共 %u 项），获得 %u 项可能的积分。", unlocked_count,
+        text.Format("You have unlocked %u of %u achievements, earning %u of %u possible points.", unlocked_count,
                     achievement_count, current_points, total_points);
       }
 
