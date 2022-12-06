@@ -1268,9 +1268,9 @@ void DrawSettingsWindow()
        ICON_FA_EXCLAMATION_TRIANGLE}};
 
     static constexpr std::array<const char*, static_cast<u32>(SettingsPage::Count)> titles = {
-      {"Interface Settings", "Game List Settings", "Console Settings", "Emulation Settings", "BIOS Settings",
-       "Controller Settings", "Hotkey Settings", "Memory Card Settings", "Display Settings", "Enhancement Settings",
-       "Audio Settings", "Achievements Settings", "Advanced Settings"}};
+      {"界面设置(极熊座专属汉化)", "游戏列表设置", "机台设置", "模拟器设置", "BIOS设置",
+       "控制器设置", "热键设置", "内存卡设置", "显示设置", "增强设置",
+       "音频设置", "成就设置", "高级设置"}};
 
     BeginNavBar();
 
@@ -1326,57 +1326,57 @@ void DrawSettingsWindow()
       {
         BeginMenuButtons();
 
-        MenuHeading("Behavior");
+        MenuHeading("行为");
 
         settings_changed |=
-          ToggleButton("Pause On Start", "Pauses the emulator when a game is started.", &s_settings_copy.start_paused);
-        settings_changed |= ToggleButton("Pause On Focus Loss",
-                                         "Pauses the emulator when you minimize the window or switch to another "
-                                         "application, and unpauses when you switch back.",
+          ToggleButton("启动时暂停", "游戏启动时暂停模拟器.", &s_settings_copy.start_paused);
+        settings_changed |= ToggleButton("焦点丢失时暂停",
+                                         "最小化窗口或切换到另一个窗口时暂停模拟器 "
+                                         "应用程序，并在切换回时取消暂停。",
                                          &s_settings_copy.pause_on_focus_loss);
         settings_changed |= ToggleButton(
-          "Pause On Menu", "Pauses the emulator when you open the quick menu, and unpauses when you close it.",
+          "暂停菜单", "打开快速菜单时暂停模拟器，关闭时取消暂停.",
           &s_settings_copy.pause_on_menu);
         settings_changed |=
-          ToggleButton("Confirm Power Off",
-                       "Determines whether a prompt will be displayed to confirm shutting down the emulator/game "
-                       "when the hotkey is pressed.",
+          ToggleButton("确认电源关闭",
+                       "确定是否显示提示以确认关闭模拟器/游戏 "
+                       "当按下热键时.",
                        &s_settings_copy.confim_power_off);
         settings_changed |=
-          ToggleButton("Save State On Exit",
-                       "Automatically saves the emulator state when powering down or exiting. You can then "
-                       "resume directly from where you left off next time.",
+          ToggleButton("退出时保存状态",
+                       "关机或退出时自动保存模拟器状态。你可以"
+                       "下次直接从你离开的地方继续.",
                        &s_settings_copy.save_state_on_exit);
         settings_changed |=
-          ToggleButton("Start Fullscreen", "Automatically switches to fullscreen mode when the program is started.",
+          ToggleButton("开始全屏显示", "程序启动时自动切换到全屏模式。",
                        &s_settings_copy.start_fullscreen);
         settings_changed |= ToggleButtonForNonSetting(
-          "Hide Cursor In Fullscreen", "Hides the mouse pointer/cursor when the emulator is in fullscreen mode.",
+          "在全屏模式下隐藏光标“，”当模拟器处于全屏模式时隐藏鼠标指针/光标.",
           "Main", "HideCursorInFullscreen", true);
         settings_changed |= ToggleButton(
-          "Inhibit Screensaver",
-          "Prevents the screen saver from activating and the host from sleeping while emulation is running.",
+          "禁用屏幕保护程序",
+          "防止在模拟运行时激活屏幕保护程序和主机休眠.",
           &s_settings_copy.inhibit_screensaver);
         settings_changed |=
-          ToggleButton("Load Devices From Save States",
-                       "When enabled, memory cards and controllers will be overwritten when save states are loaded.",
+          ToggleButton("从保存状态加载设备",
+                       "启用后，存储卡和控制器将在加载保存状态时被覆盖.",
                        &s_settings_copy.load_devices_from_save_states);
         settings_changed |= ToggleButton(
-          "Apply Per-Game Settings",
-          "When enabled, per-game settings will be applied, and incompatible enhancements will be disabled.",
+          "应用每游戏设置",
+          "启用后，将应用每个游戏的设置，并禁用不兼容的增强功能.",
           &s_settings_copy.apply_game_settings);
         settings_changed |=
-          ToggleButton("Automatically Load Cheats", "Automatically loads and applies cheats on game start.",
+          ToggleButton("自动加载作弊", "游戏开始时自动加载并应用作弊.",
                        &s_settings_copy.auto_load_cheats);
 
 #ifdef WITH_DISCORD_PRESENCE
-        MenuHeading("Integration");
+        MenuHeading("集成");
         settings_changed |= ToggleButtonForNonSetting(
-          "Enable Discord Presence", "Shows the game you are currently playing as part of your profile on Discord.",
+          "启用Discord Presence", "显示你正在玩的游戏，作为你在Discord上的个人资料的一部分.",
           "Main", "EnableDiscordPresence", false);
 #endif
 
-        MenuHeading("Miscellaneous");
+        MenuHeading("杂项");
 
         static ControllerInterface::Backend cbtype = ControllerInterface::Backend::None;
         static bool cbtype_set = false;
@@ -1388,7 +1388,7 @@ void DrawSettingsWindow()
           cbtype_set = true;
         }
 
-        if (EnumChoiceButton("Controller Backend", "Sets the API which is used to receive controller input.", &cbtype,
+        if (EnumChoiceButton("控制器后端", "设置用于接收控制器输入的API。", &cbtype,
                              ControllerInterface::GetBackendName, ControllerInterface::Backend::Count))
         {
           s_host_interface->GetSettingsInterface()->SetStringValue("Main", "ControllerBackend",
@@ -1404,11 +1404,11 @@ void DrawSettingsWindow()
       {
         BeginMenuButtons();
 
-        MenuHeading("Game List");
+        MenuHeading("游戏列表");
 
-        if (MenuButton(ICON_FA_FOLDER_PLUS "  Add Search Directory", "Adds a new directory to the game search list."))
+        if (MenuButton(ICON_FA_FOLDER_PLUS "  添加搜索目录", "将新目录添加到游戏搜索列表."))
         {
-          OpenFileSelector(ICON_FA_FOLDER_PLUS "  Add Search Directory", true, [](const std::string& dir) {
+          OpenFileSelector(ICON_FA_FOLDER_PLUS "  添加搜索目录", true, [](const std::string& dir) {
             if (!dir.empty())
             {
               s_host_interface->GetSettingsInterface()->AddToStringList("GameList", "RecursivePaths", dir.c_str());
@@ -1421,11 +1421,11 @@ void DrawSettingsWindow()
           });
         }
 
-        if (MenuButton(ICON_FA_FOLDER_OPEN "  Change Recursive Directories",
-                       "Sets whether subdirectories are searched for each game directory"))
+        if (MenuButton(ICON_FA_FOLDER_OPEN "  更改递归目录",
+                       "设置是否为每个游戏目录搜索子目录"))
         {
           OpenChoiceDialog(
-            ICON_FA_FOLDER_OPEN "  Change Recursive Directories", true, GetGameListDirectoryOptions(true),
+            ICON_FA_FOLDER_OPEN "  更改递归目录", true, GetGameListDirectoryOptions(true),
             [](s32 index, const std::string& title, bool checked) {
               if (index < 0)
                 return;
@@ -1447,10 +1447,10 @@ void DrawSettingsWindow()
             });
         }
 
-        if (MenuButton(ICON_FA_FOLDER_MINUS "  Remove Search Directory",
-                       "Removes a directory from the game search list."))
+        if (MenuButton(ICON_FA_FOLDER_MINUS "  删除搜索目录",
+                       "从游戏搜索列表中删除目录."))
         {
-          OpenChoiceDialog(ICON_FA_FOLDER_MINUS "  Remove Search Directory", false, GetGameListDirectoryOptions(false),
+          OpenChoiceDialog(ICON_FA_FOLDER_MINUS "  删除搜索目录", false, GetGameListDirectoryOptions(false),
                            [](s32 index, const std::string& title, bool checked) {
                              if (index < 0)
                                return;
@@ -1465,10 +1465,10 @@ void DrawSettingsWindow()
                            });
         }
 
-        MenuHeading("Search Directories");
+        MenuHeading("搜索目录");
         for (const GameList::DirectoryEntry& entry : s_host_interface->GetGameList()->GetSearchDirectories())
         {
-          MenuButton(entry.path.c_str(), entry.recursive ? "Scanning Subdirectories" : "Not Scanning Subdirectories",
+          MenuButton(entry.path.c_str(), entry.recursive ? "扫描子目录" : "不扫描子目录",
                      false);
         }
 
@@ -1479,54 +1479,54 @@ void DrawSettingsWindow()
       case SettingsPage::ConsoleSettings:
       {
         static constexpr auto cdrom_read_speeds =
-          make_array("None (Double Speed)", "2x (Quad Speed)", "3x (6x Speed)", "4x (8x Speed)", "5x (10x Speed)",
-                     "6x (12x Speed)", "7x (14x Speed)", "8x (16x Speed)", "9x (18x Speed)", "10x (20x Speed)");
+          make_array("无（2倍速）", "2x（4倍速）", "3x（6倍速）", "4x (8倍速)", "5x (10倍速)",
+                     "6x (12倍速)", "7x (14倍速)", "8x (16倍速)", "9x (18倍速)", "10x (20倍速)");
 
-        static constexpr auto cdrom_seek_speeds = make_array("Infinite/Instantaneous", "None (Normal Speed)", "2x",
+        static constexpr auto cdrom_seek_speeds = make_array("无限/瞬时", "无（正常速度）", "2x",
                                                              "3x", "4x", "5x", "6x", "7x", "8x", "9x", "10x");
 
         BeginMenuButtons();
 
-        MenuHeading("Console Settings");
+        MenuHeading("控制台设置");
 
         settings_changed |=
-          EnumChoiceButton("Region", "Determines the emulated hardware type.", &s_settings_copy.region,
+          EnumChoiceButton("区域", "确定模拟硬件类型.", &s_settings_copy.region,
                            &Settings::GetConsoleRegionDisplayName, ConsoleRegion::Count);
 
-        MenuHeading("CPU Emulation (MIPS R3000A Derivative)");
+        MenuHeading("CPU模拟（MIPS R3000A衍生产品）");
 
         settings_changed |= EnumChoiceButton(
-          "Execution Mode", "Determines how the emulated CPU executes instructions. Recompiler is recommended.",
+          "执行模式", "确定被模拟CPU如何执行指令。建议重新编译.",
           &s_settings_copy.cpu_execution_mode, &Settings::GetCPUExecutionModeDisplayName, CPUExecutionMode::Count);
 
         settings_changed |=
-          ToggleButton("Enable Overclocking", "When this option is chosen, the clock speed set below will be used.",
+          ToggleButton("启用超频", "当选择此选项时，将使用下面设置的时钟速度.",
                        &s_settings_copy.cpu_overclock_enable);
 
         s32 overclock_percent =
           s_settings_copy.cpu_overclock_enable ? static_cast<s32>(s_settings_copy.GetCPUOverclockPercent()) : 100;
-        if (RangeButton("Overclocking Percentage",
-                        "Selects the percentage of the normal clock speed the emulated hardware will run at.",
+        if (RangeButton("超频百分比",
+                        "选择模拟硬件将运行的正常时钟速度的百分比.",
                         &overclock_percent, 10, 1000, 10, "%d%%", s_settings_copy.cpu_overclock_enable))
         {
           s_settings_copy.SetCPUOverclockPercent(static_cast<u32>(overclock_percent));
           settings_changed = true;
         }
 
-        MenuHeading("CD-ROM Emulation");
+        MenuHeading("CD-ROM模拟");
 
         const u32 read_speed_index =
           std::clamp<u32>(s_settings_copy.cdrom_read_speedup, 1u, static_cast<u32>(cdrom_read_speeds.size())) - 1u;
-        if (MenuButtonWithValue("Read Speedup",
-                                "Speeds up CD-ROM reads by the specified factor. May improve loading speeds in some "
-                                "games, and break others.",
+        if (MenuButtonWithValue("读取加速",
+                                "按指定的系数加快CD-ROM读取速度。在某些情况下可提高装载速度 "
+                                "游戏，并打破其他.",
                                 cdrom_read_speeds[read_speed_index]))
         {
           ImGuiFullscreen::ChoiceDialogOptions options;
           options.reserve(cdrom_read_speeds.size());
           for (u32 i = 0; i < static_cast<u32>(cdrom_read_speeds.size()); i++)
             options.emplace_back(cdrom_read_speeds[i], i == read_speed_index);
-          OpenChoiceDialog("CD-ROM Read Speedup", false, std::move(options),
+          OpenChoiceDialog("CD-ROM 读取加速", false, std::move(options),
                            [](s32 index, const std::string& title, bool checked) {
                              if (index >= 0)
                                s_settings_copy.cdrom_read_speedup = static_cast<u32>(index) + 1;
@@ -1536,16 +1536,16 @@ void DrawSettingsWindow()
 
         const u32 seek_speed_index =
           std::min(s_settings_copy.cdrom_seek_speedup, static_cast<u32>(cdrom_seek_speeds.size()));
-        if (MenuButtonWithValue("Seek Speedup",
-                                "Speeds up CD-ROM seeks by the specified factor. May improve loading speeds in some "
-                                "games, and break others.",
+        if (MenuButtonWithValue("寻求加速",
+                                "按指定的因数加速CD-ROM查找。可以提高加载速度在某些 "
+                                "游戏，并打破其他.",
                                 cdrom_seek_speeds[seek_speed_index]))
         {
           ImGuiFullscreen::ChoiceDialogOptions options;
           options.reserve(cdrom_seek_speeds.size());
           for (u32 i = 0; i < static_cast<u32>(cdrom_seek_speeds.size()); i++)
             options.emplace_back(cdrom_seek_speeds[i], i == seek_speed_index);
-          OpenChoiceDialog("CD-ROM Seek Speedup", false, std::move(options),
+          OpenChoiceDialog("CD-ROM 寻求加速", false, std::move(options),
                            [](s32 index, const std::string& title, bool checked) {
                              if (index >= 0)
                                s_settings_copy.cdrom_seek_speedup = static_cast<u32>(index);
@@ -1555,8 +1555,8 @@ void DrawSettingsWindow()
 
         s32 readahead_sectors = s_settings_copy.cdrom_readahead_sectors;
         if (RangeButton(
-              "Readahead Sectors",
-              "Reduces hitches in emulation by reading/decompressing CD data asynchronously on a worker thread.",
+              "读取扇区",
+              "通过在工作线程上异步读取/解压缩CD数据，减少模拟中的故障。",
               &readahead_sectors, 0, 32, 1))
         {
           s_settings_copy.cdrom_readahead_sectors = static_cast<u8>(readahead_sectors);
@@ -1564,20 +1564,20 @@ void DrawSettingsWindow()
         }
 
         settings_changed |=
-          ToggleButton("Enable Region Check", "Simulates the region check present in original, unmodified consoles.",
+          ToggleButton("启用区域检查", "模拟原始未修改控制台中的区域检查.",
                        &s_settings_copy.cdrom_region_check);
         settings_changed |= ToggleButton(
-          "Preload Images to RAM",
-          "Loads the game image into RAM. Useful for network paths that may become unreliable during gameplay.",
+          "将图像预加载到RAM",
+          "将游戏图像加载到RAM中.适用于在游戏过程中可能变得不可靠的网络路径.",
           &s_settings_copy.cdrom_load_image_to_ram);
         settings_changed |= ToggleButtonForNonSetting(
-          "Apply Image Patches",
-          "Automatically applies patches to disc images when they are present, currently only PPF is supported.",
+          "应用图像补丁",
+          "当磁盘映像存在时自动应用补丁，目前只支持PPF.",
           "CDROM", "LoadImagePatches", false);
 
-        MenuHeading("Controller Ports");
+        MenuHeading("控制器端口");
 
-        settings_changed |= EnumChoiceButton("Multitap", nullptr, &s_settings_copy.multitap_mode,
+        settings_changed |= EnumChoiceButton("转接", nullptr, &s_settings_copy.multitap_mode,
                                              &Settings::GetMultitapModeDisplayName, MultitapMode::Count);
 
         EndMenuButtons();
@@ -1598,7 +1598,7 @@ void DrawSettingsWindow()
               (speed != 0.0f) ?
                 StringUtil::StdStringFromFormat("%d%% [%d FPS (NTSC) / %d FPS (PAL)]", static_cast<int>(speed * 100.0f),
                                                 static_cast<int>(60.0f * speed), static_cast<int>(50.0f * speed)) :
-                "Unlimited",
+                "无限",
               speed == current_speed);
           }
           return options;
@@ -1606,13 +1606,13 @@ void DrawSettingsWindow()
 
         BeginMenuButtons();
 
-        MenuHeading("Speed Control");
+        MenuHeading("速度控制");
 
 #define MAKE_EMULATION_SPEED(setting_title, setting_var)                                                               \
   if (MenuButtonWithValue(                                                                                             \
         setting_title,                                                                                                 \
-        "Sets the target emulation speed. It is not guaranteed that this speed will be reached on all systems.",       \
-        (setting_var != 0.0f) ? TinyString::FromFormat("%.0f%%", setting_var * 100.0f) : TinyString("Unlimited")))     \
+        "设置目标模拟速度。不能保证在所有系统上都能达到这个速度.",       \
+        (setting_var != 0.0f) ? TinyString::FromFormat("%.0f%%", setting_var * 100.0f) : TinyString("无限")))     \
   {                                                                                                                    \
     OpenChoiceDialog(setting_title, false, get_emulation_speed_options(setting_var),                                   \
                      [](s32 index, const std::string& title, bool checked) {                                           \
@@ -1625,48 +1625,48 @@ void DrawSettingsWindow()
                      });                                                                                               \
   }
 
-        MAKE_EMULATION_SPEED("Emulation Speed", s_settings_copy.emulation_speed);
-        MAKE_EMULATION_SPEED("Fast Forward Speed", s_settings_copy.fast_forward_speed);
-        MAKE_EMULATION_SPEED("Turbo Speed", s_settings_copy.turbo_speed);
+        MAKE_EMULATION_SPEED("模拟速度", s_settings_copy.emulation_speed);
+        MAKE_EMULATION_SPEED("快进速度", s_settings_copy.fast_forward_speed);
+        MAKE_EMULATION_SPEED("一键超频", s_settings_copy.turbo_speed);
 
 #undef MAKE_EMULATION_SPEED
 
-        MenuHeading("Runahead/Rewind");
+        MenuHeading("运行前/回放");
 
         settings_changed |=
-          ToggleButton("Enable Rewinding", "Saves state periodically so you can rewind any mistakes while playing.",
+          ToggleButton("启用倒带", "定期保存状态，以便在播放时倒带任何错误.",
                        &s_settings_copy.rewind_enable);
         settings_changed |= RangeButton(
-          "Rewind Save Frequency",
-          "How often a rewind state will be created. Higher frequencies have greater system requirements.",
+          "倒带保存频率",
+          "创建倒带状态的频率。频率越高，系统要求越高.",
           &s_settings_copy.rewind_save_frequency, 0.0f, 3600.0f, 0.1f, "%.2f Seconds", s_settings_copy.rewind_enable);
         settings_changed |=
-          RangeButton("Rewind Save Frequency",
-                      "How many saves will be kept for rewinding. Higher values have greater memory requirements.",
-                      reinterpret_cast<s32*>(&s_settings_copy.rewind_save_slots), 1, 10000, 1, "%d Frames",
+          RangeButton("倒带保存频率",
+                      "将保留多少保存以便倒带。值越高，内存需求越大.",
+                      reinterpret_cast<s32*>(&s_settings_copy.rewind_save_slots), 1, 10000, 1, "%d 帧",
                       s_settings_copy.rewind_enable);
 
         TinyString summary;
         if (!s_settings_copy.IsRunaheadEnabled())
-          summary = "Disabled";
+          summary = "禁用";
         else
-          summary.Format("%u Frames", s_settings_copy.runahead_frames);
+          summary.Format("%u 帧", s_settings_copy.runahead_frames);
 
-        if (MenuButtonWithValue("Runahead",
-                                "Simulates the system ahead of time and rolls back/replays to reduce input lag. Very "
-                                "high system requirements.",
+        if (MenuButtonWithValue("向前运行",
+                                "提前模拟系统并回滚/回放以减少输入延迟。 "
+                                "对系统要求非常高.",
                                 summary))
         {
           ImGuiFullscreen::ChoiceDialogOptions options;
           for (u32 i = 0; i <= 10; i++)
           {
             if (i == 0)
-              options.emplace_back("Disabled", s_settings_copy.runahead_frames == i);
+              options.emplace_back("禁用", s_settings_copy.runahead_frames == i);
             else
-              options.emplace_back(StringUtil::StdStringFromFormat("%u Frames", i),
+              options.emplace_back(StringUtil::StdStringFromFormat("%u 帧", i),
                                    s_settings_copy.runahead_frames == i);
           }
-          OpenChoiceDialog("Runahead", false, std::move(options),
+          OpenChoiceDialog("向前运行", false, std::move(options),
                            [](s32 index, const std::string& title, bool checked) {
                              s_settings_copy.runahead_frames = index;
                              s_host_interface->RunLater(SaveAndApplySettings);
@@ -1678,8 +1678,8 @@ void DrawSettingsWindow()
         TinyString rewind_summary;
         if (s_settings_copy.IsRunaheadEnabled())
         {
-          rewind_summary = "Rewind is disabled because runahead is enabled. Runahead will significantly increase "
-                           "system requirements.";
+          rewind_summary = "已禁用倒带，因为已启用提前运行。提前运行将显著增加 "
+                           "系统要求.";
         }
         else if (s_settings_copy.rewind_enable)
         {
@@ -1690,14 +1690,14 @@ void DrawSettingsWindow()
 
           u64 ram_usage, vram_usage;
           System::CalculateRewindMemoryUsage(s_settings_copy.rewind_save_slots, &ram_usage, &vram_usage);
-          rewind_summary.Format("Rewind for %u frames, lasting %.2f seconds will require up to %" PRIu64
-                                "MB of RAM and %" PRIu64 "MB of VRAM.",
+          rewind_summary.Format("回放 %u 帧，持续 %.2f 秒，最多需要%" PRIu64
+                                "MB of RAM 和 %" PRIu64 "MB of VRAM.",
                                 s_settings_copy.rewind_save_slots, duration, ram_usage / 1048576, vram_usage / 1048576);
         }
         else
         {
           rewind_summary =
-            "Rewind is not enabled. Please note that enabling rewind may significantly increase system requirements.";
+            "未启用倒带。请注意，启用倒带可能会显著增加系统要求.";
         }
 
         ActiveButton(rewind_summary, false, false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY,
@@ -1728,7 +1728,7 @@ void DrawSettingsWindow()
 
         BeginMenuButtons();
 
-        MenuHeading("BIOS Selection");
+        MenuHeading("BIOS 选择");
 
         for (u32 i = 0; i < static_cast<u32>(ConsoleRegion::Count); i++)
         {
@@ -1740,7 +1740,7 @@ void DrawSettingsWindow()
           title.Format("BIOS for %s", Settings::GetConsoleRegionName(region));
 
           if (MenuButtonWithValue(title,
-                                  SmallString::FromFormat("BIOS to use when emulating %s consoles.",
+                                  SmallString::FromFormat("模拟 %s 控制台时要使用的BIOS.",
                                                           Settings::GetConsoleRegionDisplayName(region)),
                                   bios_region_filenames[i].c_str()))
           {
@@ -1766,9 +1766,9 @@ void DrawSettingsWindow()
           }
         }
 
-        if (MenuButton("BIOS Directory", bios_directory.c_str()))
+        if (MenuButton("BIOS 目录", bios_directory.c_str()))
         {
-          OpenFileSelector("BIOS Directory", true, [](const std::string& path) {
+          OpenFileSelector("BIOS 目录", true, [](const std::string& path) {
             if (!path.empty())
             {
               bios_directory = path;
@@ -1779,13 +1779,13 @@ void DrawSettingsWindow()
           });
         }
 
-        MenuHeading("Patches");
+        MenuHeading("补丁");
 
         settings_changed |=
-          ToggleButton("Enable Fast Boot", "Patches the BIOS to skip the boot animation. Safe to enable.",
+          ToggleButton("启用快速启动", "为BIOS打补丁以跳过引导动画。可安全启用.",
                        &s_settings_copy.bios_patch_fast_boot);
         settings_changed |= ToggleButton(
-          "Enable TTY Output", "Patches the BIOS to log calls to printf(). Only use when debugging, can break games.",
+          "启用TTY输出", "修补BIOS以记录对printf()的调用。只有在调试时使用，才能打破游戏.",
           &s_settings_copy.bios_patch_tty_enable);
 
         EndMenuButtons();
@@ -1796,9 +1796,9 @@ void DrawSettingsWindow()
       {
         BeginMenuButtons();
 
-        MenuHeading("Input Profiles");
-        if (MenuButton(ICON_FA_FOLDER_OPEN "  Load Input Profile",
-                       "Applies a saved configuration of controller types and bindings."))
+        MenuHeading("输入配置文件");
+        if (MenuButton(ICON_FA_FOLDER_OPEN "  加载输入配置文件",
+                       "应用已保存的控制器类型和绑定配置."))
         {
           CommonHostInterface::InputProfileList profiles(s_host_interface->GetInputProfileList());
           ImGuiFullscreen::ChoiceDialogOptions options;
@@ -1816,7 +1816,7 @@ void DrawSettingsWindow()
             s_host_interface->RunLater(SaveAndApplySettings);
             CloseChoiceDialog();
           };
-          OpenChoiceDialog(ICON_FA_FOLDER_OPEN "  Load Input Profile", false, std::move(options), std::move(callback));
+          OpenChoiceDialog(ICON_FA_FOLDER_OPEN "  加载输入配置文件", false, std::move(options), std::move(callback));
         }
 
         static std::array<ControllerType, NUM_CONTROLLER_AND_CARD_PORTS> type_cache = {};
@@ -1839,11 +1839,11 @@ void DrawSettingsWindow()
             MenuHeading(port_labels[port]);
 
           settings_changed |= EnumChoiceButton(
-            TinyString::FromFormat(ICON_FA_GAMEPAD "  Controller Type##type%u", port),
-            "Determines the simulated controller plugged into this port.", &s_settings_copy.controller_types[port],
+            TinyString::FromFormat(ICON_FA_GAMEPAD "  控制器类型##type%u", port),
+            "确定插入此端口的模拟控制器.", &s_settings_copy.controller_types[port],
             &Settings::GetControllerTypeDisplayName, ControllerType::Count);
 
-          section.Format("Controller%u", port + 1);
+          section.Format("控制器%u", port + 1);
 
           const ControllerType ctype = s_settings_copy.controller_types[port];
           if (ctype != type_cache[port])
@@ -1856,26 +1856,26 @@ void DrawSettingsWindow()
             for (u32 i = 0; i < CommonHostInterface::NUM_CONTROLLER_AUTOFIRE_BUTTONS; i++)
             {
               autofire_buttons_cache[port * CommonHostInterface::NUM_CONTROLLER_AUTOFIRE_BUTTONS + i] =
-                s_host_interface->GetStringSettingValue(section, TinyString::FromFormat("AutoFire%uButton", i + 1));
+                s_host_interface->GetStringSettingValue(section, TinyString::FromFormat("连发%u按键", i + 1));
             }
           }
 
           for (const auto& it : button_cache[port])
           {
-            key.Format("Button%s", it.first.c_str());
+            key.Format("按键%s", it.first.c_str());
             DrawInputBindingButton(InputBindingType::Button, section, key, it.first.c_str());
           }
 
           for (const auto& it : axis_cache[port])
           {
-            key.Format("Axis%s", std::get<0>(it).c_str());
+            key.Format("轴%s", std::get<0>(it).c_str());
             DrawInputBindingButton(std::get<2>(it) == Controller::AxisType::Half ? InputBindingType::HalfAxis :
                                                                                    InputBindingType::Axis,
                                    section, key, std::get<0>(it).c_str());
           }
 
           if (Controller::GetVibrationMotorCount(ctype) > 0)
-            DrawInputBindingButton(InputBindingType::Rumble, section, "Rumble", "Rumble/Vibration");
+            DrawInputBindingButton(InputBindingType::Rumble, section, "震动声", "震动声/震动");
 
           for (const SettingInfo& it : setting_cache[port])
             settings_changed |= SettingInfoButton(it, section);
@@ -1886,8 +1886,8 @@ void DrawSettingsWindow()
             const u32 cache_index = port * CommonHostInterface::NUM_CONTROLLER_AUTOFIRE_BUTTONS + autofire_index;
 
             if (MenuButtonWithValue(
-                  TinyString::FromFormat("Auto Fire %u##autofire_%u_%u", autofire_index + 1, port, autofire_index),
-                  "Selects the button to toggle with this auto fire binding.",
+                  TinyString::FromFormat("连发 %u##autofire_%u_%u", autofire_index + 1, port, autofire_index),
+                  "选择用于切换此自动激发绑定的按钮.",
                   autofire_buttons_cache[cache_index].c_str()))
 
             {
@@ -1899,15 +1899,15 @@ void DrawSettingsWindow()
                 if (index == 0)
                 {
                   s_host_interface->GetSettingsInterface()->DeleteValue(
-                    TinyString::FromFormat("Controller%u", port + 1),
-                    TinyString::FromFormat("AutoFire%uButton", autofire_index + 1));
+                    TinyString::FromFormat("控制器%u", port + 1),
+                    TinyString::FromFormat("连发%u按键", autofire_index + 1));
                   std::string().swap(autofire_buttons_cache[cache_index]);
                 }
                 else
                 {
                   s_host_interface->GetSettingsInterface()->SetStringValue(
-                    TinyString::FromFormat("Controller%u", port + 1),
-                    TinyString::FromFormat("AutoFire%uButton", autofire_index + 1),
+                    TinyString::FromFormat("控制器%u", port + 1),
+                    TinyString::FromFormat("连发%u按键", autofire_index + 1),
                     button_cache[port][index - 1].first.c_str());
                   autofire_buttons_cache[cache_index] = button_cache[port][index - 1].first;
                 }
@@ -1919,29 +1919,29 @@ void DrawSettingsWindow()
 
               ImGuiFullscreen::ChoiceDialogOptions options;
               options.reserve(button_cache[port].size() + 1);
-              options.emplace_back("(None)", autofire_buttons_cache[cache_index].empty());
+              options.emplace_back("(无)", autofire_buttons_cache[cache_index].empty());
               for (const auto& it : button_cache[port])
                 options.emplace_back(it.first, autofire_buttons_cache[cache_index] == it.first);
 
-              OpenChoiceDialog(ICON_FA_GAMEPAD "  Select Auto Fire Button", false, std::move(options),
+              OpenChoiceDialog(ICON_FA_GAMEPAD "  选择连发按钮", false, std::move(options),
                                std::move(callback));
             }
 
             if (autofire_buttons_cache[cache_index].empty())
               continue;
 
-            key.Format("AutoFire%u", autofire_index + 1);
+            key.Format("连发%u", autofire_index + 1);
             DrawInputBindingButton(InputBindingType::Button, section, key,
-                                   TinyString::FromFormat("Auto Fire %u Binding##autofire_binding_%u_%u",
+                                   TinyString::FromFormat("连发 %u 绑定##autofire_binding_%u_%u",
                                                           autofire_index + 1, port, autofire_index),
                                    false);
 
-            key.Format("AutoFire%uFrequency", autofire_index + 1);
+            key.Format("连发%u频率", autofire_index + 1);
             int frequency = s_host_interface->GetSettingsInterface()->GetIntValue(
               section, key, CommonHostInterface::DEFAULT_AUTOFIRE_FREQUENCY);
-            settings_changed |= RangeButton(TinyString::FromFormat("Auto Fire %u Frequency##autofire_frequency_%u_%u",
+            settings_changed |= RangeButton(TinyString::FromFormat("连发 %u 频率##autofire_frequency_%u_%u",
                                                                    autofire_index + 1, port, autofire_index),
-                                            "Sets the rate at which the auto fire will trigger on and off.", &frequency,
+                                            "设置连发的启动和关闭速度.", &frequency,
                                             1, 255, 1, "%d Frames");
           }
         }
@@ -1963,7 +1963,7 @@ void DrawSettingsWindow()
             last_category = hotkey.category;
           }
 
-          DrawInputBindingButton(InputBindingType::Button, "Hotkeys", hotkey.name, hotkey.display_name);
+          DrawInputBindingButton(InputBindingType::Button, "热键", hotkey.name, hotkey.display_name);
         }
 
         EndMenuButtons();
@@ -1976,23 +1976,23 @@ void DrawSettingsWindow()
 
         for (u32 i = 0; i < 2; i++)
         {
-          MenuHeading(TinyString::FromFormat("Memory Card Port %u", i + 1));
+          MenuHeading(TinyString::FromFormat("记忆卡接口 %u", i + 1));
 
           settings_changed |= EnumChoiceButton(
-            TinyString::FromFormat("Memory Card %u Type", i + 1),
-            SmallString::FromFormat("Sets which sort of memory card image will be used for slot %u.", i + 1),
+            TinyString::FromFormat("记忆卡 %u 类型", i + 1),
+            SmallString::FromFormat("设置插槽将使用哪种存储卡映像 %u.", i + 1),
             &s_settings_copy.memory_card_types[i], &Settings::GetMemoryCardTypeDisplayName, MemoryCardType::Count);
 
-          settings_changed |= MenuButton(TinyString::FromFormat("Shared Memory Card %u Path", i + 1),
+          settings_changed |= MenuButton(TinyString::FromFormat("共享存储卡 %u 路径", i + 1),
                                          s_settings_copy.memory_card_paths[i].c_str(),
                                          s_settings_copy.memory_card_types[i] == MemoryCardType::Shared);
         }
 
-        MenuHeading("Shared Settings");
+        MenuHeading("共享设置");
 
-        settings_changed |= ToggleButton("Use Single Card For Sub-Images",
-                                         "When using a multi-disc image (m3u/pbp) and per-game (title) memory cards, "
-                                         "use a single memory card for all discs.",
+        settings_changed |= ToggleButton("对Sub-Images使用单卡",
+                                         "当使用多盘图像(m3u/pbp)和每个游戏(标题)存储卡时, "
+                                         "对所有磁盘使用单一存储卡.",
                                          &s_settings_copy.memory_card_use_playlist_title);
 
         static std::string memory_card_directory;
@@ -2003,9 +2003,9 @@ void DrawSettingsWindow()
           memory_card_directory_set = true;
         }
 
-        if (MenuButton("Memory Card Directory", memory_card_directory.c_str()))
+        if (MenuButton("记忆卡目录", memory_card_directory.c_str()))
         {
-          OpenFileSelector("Memory Card Directory", true, [](const std::string& path) {
+          OpenFileSelector("记忆卡目录", true, [](const std::string& path) {
             if (!path.empty())
             {
               memory_card_directory = path;
@@ -2016,7 +2016,7 @@ void DrawSettingsWindow()
           });
         }
 
-        if (MenuButton("Reset Memory Card Directory", "Resets memory card directory to default (user directory)."))
+        if (MenuButton("重置存储卡目录", "将内存卡目录重置为默认(用户目录)."))
         {
           s_settings_copy.memory_card_directory.clear();
           s_host_interface->RunLater(SaveAndApplySettings);
@@ -2031,10 +2031,10 @@ void DrawSettingsWindow()
       {
         BeginMenuButtons();
 
-        MenuHeading("Device Settings");
+        MenuHeading("设备设置");
 
         settings_changed |=
-          EnumChoiceButton("GPU Renderer", "Chooses the backend to use for rendering the console/game visuals.",
+          EnumChoiceButton("GPU渲染器", "选择用于渲染主机/游戏视觉效果的后端.",
                            &s_settings_copy.gpu_renderer, &Settings::GetRendererDisplayName, GPURenderer::Count);
 
         static std::string fullscreen_mode;
@@ -2046,14 +2046,14 @@ void DrawSettingsWindow()
         }
 
 #ifndef _UWP
-        if (MenuButtonWithValue("Fullscreen Resolution", "Selects the resolution to use in fullscreen modes.",
-                                fullscreen_mode.empty() ? "Borderless Fullscreen" : fullscreen_mode.c_str()))
+        if (MenuButtonWithValue("全屏分辨率", "选择要在全屏模式下使用的分辨率.",
+                                fullscreen_mode.empty() ? "无边框全屏" : fullscreen_mode.c_str()))
         {
           HostDisplay::AdapterAndModeList aml(s_host_interface->GetDisplay()->GetAdapterAndModeList());
 
           ImGuiFullscreen::ChoiceDialogOptions options;
           options.reserve(aml.fullscreen_modes.size() + 1);
-          options.emplace_back("Borderless Fullscreen", fullscreen_mode.empty());
+          options.emplace_back("无边框全屏", fullscreen_mode.empty());
           for (std::string& mode : aml.fullscreen_modes)
             options.emplace_back(std::move(mode), mode == fullscreen_mode);
 
@@ -2067,10 +2067,10 @@ void DrawSettingsWindow()
 
             s_host_interface->GetSettingsInterface()->SetStringValue("GPU", "FullscreenMode", fullscreen_mode.c_str());
             s_host_interface->GetSettingsInterface()->Save();
-            s_host_interface->AddOSDMessage("Resolution change will be applied after restarting.", 10.0f);
+            s_host_interface->AddOSDMessage("重新启动后分辨率生效。", 10.0f);
             CloseChoiceDialog();
           };
-          OpenChoiceDialog(ICON_FA_TV "  Fullscreen Resolution", false, std::move(options), std::move(callback));
+          OpenChoiceDialog(ICON_FA_TV "  全屏分辨率", false, std::move(options), std::move(callback));
         }
 #endif
 
@@ -2080,8 +2080,8 @@ void DrawSettingsWindow()
           case GPURenderer::HardwareD3D11:
           {
             settings_changed |= ToggleButtonForNonSetting(
-              "Use Blit Swap Chain",
-              "Uses a blit presentation model instead of flipping. This may be needed on some systems.", "Display",
+              "使用Blit交换链",
+              "使用blit演示模型而不是翻转。某些系统可能需要此功能.", "Display",
               "UseBlitSwapChain", false);
           }
           break;
@@ -2090,16 +2090,16 @@ void DrawSettingsWindow()
           case GPURenderer::HardwareVulkan:
           {
             settings_changed |=
-              ToggleButton("Threaded Presentation",
-                           "Presents frames on a background thread when fast forwarding or vsync is disabled.",
+              ToggleButton("线程化演示",
+                           "当禁用快进或vsync时，在后台线程上显示帧.",
                            &s_settings_copy.gpu_threaded_presentation);
           }
           break;
 
           case GPURenderer::Software:
           {
-            settings_changed |= ToggleButton("Threaded Rendering",
-                                             "Uses a second thread for drawing graphics. Speed boost, and safe to use.",
+            settings_changed |= ToggleButton("线程渲染",
+                                             "使用第二个线程绘制图形。速度提升，使用安全.",
                                              &s_settings_copy.gpu_use_thread);
           }
           break;
@@ -2111,83 +2111,83 @@ void DrawSettingsWindow()
         if (!s_settings_copy.IsUsingSoftwareRenderer())
         {
           settings_changed |=
-            ToggleButton("Use Software Renderer For Readbacks",
-                         "Runs the software renderer in parallel for VRAM readbacks. On some systems, this may result "
-                         "in greater performance.",
+            ToggleButton("使用软件渲染器进行回读",
+                         "并行运行软件渲染器以进行VRAM读回。在某些系统上，这可能会"
+                         "提高性能.",
                          &s_settings_copy.gpu_use_software_renderer_for_readbacks);
         }
 
         settings_changed |=
-          ToggleButton("Enable VSync",
-                       "Synchronizes presentation of the console's frames to the host. Enable for smoother animations.",
+          ToggleButton("启用垂直同步",
+                       "将控制台帧的呈现同步到主机。启用更平滑的动画.",
                        &s_settings_copy.video_sync_enabled);
 
-        settings_changed |= ToggleButton("Sync To Host Refresh Rate",
-                                         "Adjusts the emulation speed so the console's refresh rate matches the host "
-                                         "when VSync and Audio Resampling are enabled.",
+        settings_changed |= ToggleButton("同步到主机刷新率",
+                                         "调整模拟速度，使控制台的刷新率与主机相匹配 "
+                                         "当“垂直同步”和“音频重采样”启用时.",
                                          &s_settings_copy.sync_to_host_refresh_rate, s_settings_copy.audio_resampling);
 
-        settings_changed |= ToggleButton("Optimal Frame Pacing",
-                                         "Ensures every frame generated is displayed for optimal pacing. Disable if "
-                                         "you are having speed or sound issues.",
+        settings_changed |= ToggleButton("最佳帧节奏",
+                                         "确保生成的每一帧都以最佳速度显示。如果"
+                                         "你的速度或声音有问题请禁用",
                                          &s_settings_copy.display_all_frames);
 
         MenuHeading("Screen Display");
 
         settings_changed |= EnumChoiceButton(
-          "Aspect Ratio", "Changes the aspect ratio used to display the console's output to the screen.",
+          "纵横比", "更改用于在屏幕上显示控制台输出的纵横比。",
           &s_settings_copy.display_aspect_ratio, &Settings::GetDisplayAspectRatioName, DisplayAspectRatio::Count);
 
         settings_changed |= EnumChoiceButton(
-          "Crop Mode", "Determines how much of the area typically not visible on a consumer TV set to crop/hide.",
+          "裁剪模式", "确定要裁剪/隐藏的用户电视机上通常不可见的区域的大小。",
           &s_settings_copy.display_crop_mode, &Settings::GetDisplayCropModeDisplayName, DisplayCropMode::Count);
 
         settings_changed |=
-          EnumChoiceButton("Downsampling",
-                           "Downsamples the rendered image prior to displaying it. Can improve "
-                           "overall image quality in mixed 2D/3D games.",
+          EnumChoiceButton("缩减取样",
+                           "在显示渲染图像之前对其进行下采样。可以改进 "
+                           "2D/3D混合游戏的整体图像质量.",
                            &s_settings_copy.gpu_downsample_mode, &Settings::GetDownsampleModeDisplayName,
                            GPUDownsampleMode::Count, !s_settings_copy.IsUsingSoftwareRenderer());
 
         settings_changed |=
-          ToggleButton("Linear Upscaling", "Uses a bilinear filter when upscaling to display, smoothing out the image.",
+          ToggleButton("线性放大", "放大显示时使用双线性过滤器，平滑图像.",
                        &s_settings_copy.display_linear_filtering, !s_settings_copy.display_integer_scaling);
 
         settings_changed |=
-          ToggleButton("Integer Upscaling", "Adds padding to ensure pixels are a whole number in size.",
+          ToggleButton("整数放大", "添加填充以确保像素大小为整数。",
                        &s_settings_copy.display_integer_scaling);
 
         settings_changed |= ToggleButton(
-          "Stretch To Fit", "Fills the window with the active display area, regardless of the aspect ratio.",
+          "拉伸以适应环境", "用活动显示区域填充窗口，而不考虑长宽比.",
           &s_settings_copy.display_stretch);
 
         settings_changed |=
-          ToggleButtonForNonSetting("Internal Resolution Screenshots",
-                                    "Saves screenshots at internal render resolution and without postprocessing.",
+          ToggleButtonForNonSetting("内部分辨率截图",
+                                    "以内部渲染分辨率保存截图，不进行后处理。",
                                     "Display", "InternalResolutionScreenshots", false);
 
-        MenuHeading("On-Screen Display");
+        MenuHeading("屏幕显示");
 
-        settings_changed |= ToggleButton("Show OSD Messages", "Shows on-screen-display messages when events occur.",
+        settings_changed |= ToggleButton("显示OSD消息", "当事件发生时显示屏幕上显示的消息.",
                                          &s_settings_copy.display_show_osd_messages);
         settings_changed |= ToggleButton(
-          "Show Game Frame Rate", "Shows the internal frame rate of the game in the top-right corner of the display.",
+          "“显示游戏帧率”，“在显示器的右上角显示游戏的内部帧率.",
           &s_settings_copy.display_show_fps);
-        settings_changed |= ToggleButton("Show Display FPS",
-                                         "Shows the number of frames (or v-syncs) displayed per second by the system "
-                                         "in the top-right corner of the display.",
+        settings_changed |= ToggleButton("显示FPS",
+                                         "显示系统每秒显示的帧数(或v-sync) "
+                                         "在显示屏的右上角.",
                                          &s_settings_copy.display_show_vps);
         settings_changed |= ToggleButton(
-          "Show Speed",
-          "Shows the current emulation speed of the system in the top-right corner of the display as a percentage.",
+          "显示速度",
+          "在显示器的右上角以百分比的形式显示系统的当前模拟速度.",
           &s_settings_copy.display_show_speed);
         settings_changed |=
-          ToggleButton("Show Resolution",
-                       "Shows the current rendering resolution of the system in the top-right corner of the display.",
+          ToggleButton("显示分辨率",
+                       "在显示器的右上角显示系统的当前呈现分辨率.",
                        &s_settings_copy.display_show_resolution);
         settings_changed |= ToggleButtonForNonSetting(
-          "Show Controller Input",
-          "Shows the current controller state of the system in the bottom-left corner of the display.", "Display",
+          "显示控制器输入",
+          "在显示屏的左下角显示系统的当前控制器状态.", "Display",
           "ShowInputs", false);
 
         EndMenuButtons();
@@ -2198,7 +2198,7 @@ void DrawSettingsWindow()
       {
         static const auto resolution_scale_text_callback = [](u32 value) -> const char* {
           static constexpr std::array<const char*, 17> texts = {
-            {"Automatic based on window size", "1x", "2x", "3x (for 720p)", "4x", "5x (for 1080p)", "6x (for 1440p)",
+            {"根据窗口大小自动", "1x", "2x", "3x (for 720p)", "4x", "5x (for 1080p)", "6x (for 1440p)",
              "7x", "8x", "9x (for 4K)", "10x", "11x", "12x", "13x", "14x", "15x", "16x"
 
             }};
@@ -2207,78 +2207,78 @@ void DrawSettingsWindow()
 
         BeginMenuButtons();
 
-        MenuHeading("Rendering Enhancements");
+        MenuHeading("渲染增强功能");
 
         settings_changed |= EnumChoiceButton<u32, u32>(
-          "Internal Resolution Scale",
-          "Scales internal VRAM resolution by the specified multiplier. Some games require 1x VRAM resolution.",
+          "内部分辨率比例",
+          "按指定的乘数缩放内部VRAM分辨率。某些游戏需要1x VRAM分辨率.",
           &s_settings_copy.gpu_resolution_scale, resolution_scale_text_callback, 17);
         settings_changed |= EnumChoiceButton(
-          "Texture Filtering",
-          "Smooths out the blockyness of magnified textures on 3D objects. Will have a greater effect "
-          "on higher resolution scales.",
+          "纹理过滤",
+          "平滑3D对象上放大纹理的块状。会有更大的效果 "
+          "在更高分辨率尺度上.",
           &s_settings_copy.gpu_texture_filter, &Settings::GetTextureFilterDisplayName, GPUTextureFilter::Count);
         settings_changed |=
-          ToggleButton("True Color Rendering",
-                       "Disables dithering and uses the full 8 bits per channel of color information. May break "
-                       "rendering in some games.",
+          ToggleButton("真彩色渲染",
+                       "禁用抖动并使用每通道完整的8位颜色信息。可能破裂 "
+                       "在某些游戏中渲染.",
                        &s_settings_copy.gpu_true_color);
         settings_changed |= ToggleButton(
-          "Scaled Dithering",
-          "Scales the dithering pattern with the internal rendering resolution, making it less noticeable. "
-          "Usually safe to enable.",
+          "缩放抖动",
+          "根据内部渲染分辨率缩放抖动模式，使其不那么明显. "
+          "通常启用是安全的.",
           &s_settings_copy.gpu_scaled_dithering, s_settings_copy.gpu_resolution_scale > 1);
         settings_changed |= ToggleButton(
-          "Widescreen Hack", "Increases the field of view from 4:3 to the chosen display aspect ratio in 3D games.",
+          "宽屏修改", "在3D游戏中将视野从4:3增加到所选的显示长宽比.",
           &s_settings_copy.gpu_widescreen_hack);
 
-        MenuHeading("Display Enhancements");
+        MenuHeading("显示增强");
 
         settings_changed |=
-          ToggleButton("Disable Interlacing",
-                       "Disables interlaced rendering and display in the GPU. Some games can render in 480p this way, "
-                       "but others will break.",
+          ToggleButton("禁用隔行扫描",
+                       "禁用GPU中的隔行渲染和显示。某些游戏可以通过这种方式以480p渲染, "
+                       "但其他地方会崩溃.",
                        &s_settings_copy.gpu_disable_interlacing);
         settings_changed |= ToggleButton(
-          "Force NTSC Timings",
-          "Forces PAL games to run at NTSC timings, i.e. 60hz. Some PAL games will run at their \"normal\" "
-          "speeds, while others will break.",
+          "强制NTSC计时",
+          "强制PAL游戏以NTSC定时运行，即60hz。一些PAL游戏将在 \"正常的\" "
+          "速度，而其他将打破.",
           &s_settings_copy.gpu_force_ntsc_timings);
         settings_changed |=
-          ToggleButton("Force 4:3 For 24-Bit Display",
-                       "Switches back to 4:3 display aspect ratio when displaying 24-bit content, usually FMVs.",
+          ToggleButton("24位显示器强制4:3",
+                       "在显示24位内容(通常是fmv)时，切换回4:3的显示宽高比.",
                        &s_settings_copy.display_force_4_3_for_24bit);
         settings_changed |= ToggleButton(
-          "Chroma Smoothing For 24-Bit Display",
-          "Smooths out blockyness between colour transitions in 24-bit content, usually FMVs. Only applies "
-          "to the hardware renderers.",
+          "用于24位显示的色度平滑",
+          "平滑24位内容（通常是FMV）中颜色转换之间的块状。仅适用 "
+          "到硬件渲染器.",
           &s_settings_copy.gpu_24bit_chroma_smoothing);
 
-        MenuHeading("PGXP (Precision Geometry Transform Pipeline");
+        MenuHeading("PGXP (精确几何变换管道");
 
         settings_changed |=
-          ToggleButton("PGXP Geometry Correction",
-                       "Reduces \"wobbly\" polygons by attempting to preserve the fractional component through memory "
-                       "transfers.",
+          ToggleButton("PGXP 几何校正",
+                       "减少 \"不稳定的\" 通过尝试通过内存保留分数分量来生成多边形 "
+                       "转移.",
                        &s_settings_copy.gpu_pgxp_enable);
         settings_changed |=
-          ToggleButton("PGXP Texture Correction",
-                       "Uses perspective-correct interpolation for texture coordinates and colors, straightening out "
-                       "warped textures.",
+          ToggleButton("PGXP 纹理校正",
+                       "使用透视校正插值纹理坐标和颜色，理顺 "
+                       "扭曲的纹理.",
                        &s_settings_copy.gpu_pgxp_texture_correction, s_settings_copy.gpu_pgxp_enable);
         settings_changed |=
-          ToggleButton("PGXP Culling Correction",
-                       "Increases the precision of polygon culling, reducing the number of holes in geometry.",
+          ToggleButton("PGXP 消隐校正",
+                       "提高多边形剔除的精度，减少几何体中的孔数.",
                        &s_settings_copy.gpu_pgxp_culling, s_settings_copy.gpu_pgxp_enable);
         settings_changed |=
-          ToggleButton("PGXP Preserve Projection Precision",
-                       "Adds additional precision to PGXP data post-projection. May improve visuals in some games.",
+          ToggleButton("PGXP 保持投影精度",
+                       "增加PGXP数据后期投影的精度。可以改善某些游戏的视觉效果.",
                        &s_settings_copy.gpu_pgxp_preserve_proj_fp, s_settings_copy.gpu_pgxp_enable);
         settings_changed |= ToggleButton(
-          "PGXP Depth Buffer", "Reduces polygon Z-fighting through depth testing. Low compatibility with games.",
+          "PGXP 深度缓冲区", "通过深度测试减少多边形Z形战斗。与游戏的兼容性低.",
           &s_settings_copy.gpu_pgxp_depth_buffer,
           s_settings_copy.gpu_pgxp_enable && s_settings_copy.gpu_pgxp_texture_correction);
-        settings_changed |= ToggleButton("PGXP CPU Mode", "Uses PGXP for all instructions, not just memory operations.",
+        settings_changed |= ToggleButton("PGXP CPU 模式", "对所有指令使用PGXP，而不仅仅是内存操作.",
                                          &s_settings_copy.gpu_pgxp_cpu, s_settings_copy.gpu_pgxp_enable);
 
         EndMenuButtons();
@@ -2289,37 +2289,37 @@ void DrawSettingsWindow()
       {
         BeginMenuButtons();
 
-        MenuHeading("Audio Control");
+        MenuHeading("音频控制");
 
-        settings_changed |= RangeButton("Output Volume", "Controls the volume of the audio played on the host.",
+        settings_changed |= RangeButton("输出音量", "控制主机上播放的音频音量.",
                                         &s_settings_copy.audio_output_volume, 0, 100, 1, "%d%%");
-        settings_changed |= RangeButton("Fast Forward Volume",
-                                        "Controls the volume of the audio played on the host when fast forwarding.",
+        settings_changed |= RangeButton("快进音量",
+                                        "控制快进时主机上播放的音频音量.",
                                         &s_settings_copy.audio_fast_forward_volume, 0, 100, 1, "%d%%");
-        settings_changed |= ToggleButton("Mute All Sound", "Prevents the emulator from producing any audible sound.",
+        settings_changed |= ToggleButton("静音所有声音", "防止模拟器产生任何可听见的声音.",
                                          &s_settings_copy.audio_output_muted);
-        settings_changed |= ToggleButton("Mute CD Audio",
-                                         "Forcibly mutes both CD-DA and XA audio from the CD-ROM. Can be used to "
-                                         "disable background music in some games.",
+        settings_changed |= ToggleButton("将CD音频静音",
+                                         "从CD-ROM中强制静音CD-DA和XA音频。可用于 "
+                                         "在某些游戏中禁用背景音乐.",
                                          &s_settings_copy.cdrom_mute_cd_audio);
 
-        MenuHeading("Backend Settings");
+        MenuHeading("后端设置");
 
         settings_changed |= EnumChoiceButton(
-          "Audio Backend",
-          "The audio backend determines how frames produced by the emulator are submitted to the host.",
+          "音频后端",
+          "音频后端决定模拟器产生的帧如何提交给主机.",
           &s_settings_copy.audio_backend, &Settings::GetAudioBackendDisplayName, AudioBackend::Count);
         settings_changed |= RangeButton(
-          "Buffer Size", "The buffer size determines the size of the chunks of audio which will be pulled by the host.",
+          "缓冲区大小", "缓冲区大小决定了主机将提取的音频块的大小.",
           reinterpret_cast<s32*>(&s_settings_copy.audio_buffer_size), 1024, 8192, 128, "%d Frames");
 
-        settings_changed |= ToggleButton("Sync To Output",
-                                         "Throttles the emulation speed based on the audio backend pulling audio "
-                                         "frames. Enable to reduce the chances of crackling.",
+        settings_changed |= ToggleButton("同步到输出",
+                                         "基于音频后端拉动音频来限制模拟速度 "
+                                         "帧.能够减少爆裂的机会.",
                                          &s_settings_copy.audio_sync_enabled);
         settings_changed |= ToggleButton(
-          "Resampling",
-          "When running outside of 100% speed, resamples audio from the target speed instead of dropping frames.",
+          "重新采样",
+          "当以100%的速度运行时，从目标速度重新采样音频，而不是丢弃帧.",
           &s_settings_copy.audio_resampling);
 
         EndMenuButtons();
@@ -2331,40 +2331,40 @@ void DrawSettingsWindow()
 #ifdef WITH_CHEEVOS
         BeginMenuButtons();
 
-        MenuHeading("Settings");
-        if (ToggleButtonForNonSetting(ICON_FA_TROPHY "  Enable RetroAchievements",
-                                      "When enabled and logged in, DuckStation will scan for achievements on startup.",
-                                      "Cheevos", "Enabled", false))
+        MenuHeading("设置");
+        if (ToggleButtonForNonSetting(ICON_FA_TROPHY "  启用追溯成就",
+                                      "启用并登录后，DuckStation将在启动时扫描成就.",
+                                      "Cheevos", "启用", false))
         {
           settings_changed = true;
           s_host_interface->RunLater([]() {
             if (!ConfirmChallengeModeEnable())
-              s_host_interface->GetSettingsInterface()->SetBoolValue("Cheevos", "Enabled", false);
+              s_host_interface->GetSettingsInterface()->SetBoolValue("Cheevos", "启用", false);
           });
         }
 
         settings_changed |= ToggleButtonForNonSetting(
-          ICON_FA_USER_FRIENDS "  Rich Presence",
-          "When enabled, rich presence information will be collected and sent to the server where supported.",
+          ICON_FA_USER_FRIENDS "  丰富的状态",
+          "启用后，将收集丰富的状态信息并将其发送到受支持的服务器.",
           "Cheevos", "RichPresence", true);
         settings_changed |=
-          ToggleButtonForNonSetting(ICON_FA_STETHOSCOPE "  Test Mode",
-                                    "When enabled, DuckStation will assume all achievements are locked and not "
-                                    "send any unlock notifications to the server.",
+          ToggleButtonForNonSetting(ICON_FA_STETHOSCOPE "  测试模式",
+                                    "启用后，DuckStation将假设所有成就都已锁定，而不是 "
+                                    "向服务器发送任何解锁通知.",
                                     "Cheevos", "TestMode", false);
         settings_changed |=
-          ToggleButtonForNonSetting(ICON_FA_MEDAL "  Test Unofficial Achievements",
-                                    "When enabled, DuckStation will list achievements from unofficial sets. These "
-                                    "achievements are not tracked by RetroAchievements.",
+          ToggleButtonForNonSetting(ICON_FA_MEDAL "  测试非官方成就",
+                                    "启用后，DuckStation将列出非官方集合中的成就。这些 "
+                                    "RetroAchievement不跟踪成就.",
                                     "Cheevos", "UnofficialTestMode", false);
-        settings_changed |= ToggleButtonForNonSetting(ICON_FA_COMPACT_DISC "  Use First Disc From Playlist",
-                                                      "When enabled, the first disc in a playlist will be used for "
-                                                      "achievements, regardless of which disc is active.",
+        settings_changed |= ToggleButtonForNonSetting(ICON_FA_COMPACT_DISC "  使用播放列表中的第一张光盘",
+                                                      "启用后，播放列表中的第一张光盘将用于"
+                                                      "成就，无论哪个光盘处于活动状态.",
                                                       "Cheevos", "UseFirstDiscFromPlaylist", true);
 
-        if (ToggleButtonForNonSetting(ICON_FA_HARD_HAT "  Hardcore Mode",
-                                      "\"Challenge\" mode for achievements. Disables save state, cheats, and slowdown "
-                                      "functions, but you receive double the achievement points.",
+        if (ToggleButtonForNonSetting(ICON_FA_HARD_HAT "  硬核模式",
+                                      "\"挑战\" 成就模式。禁用保存状态、欺骗和减速 "
+                                      "功能，但你会获得双倍的成就点.",
                                       "Cheevos", "ChallengeMode", false))
         {
           s_host_interface->RunLater([]() {
@@ -2373,11 +2373,11 @@ void DrawSettingsWindow()
           });
         }
 
-        MenuHeading("Account");
+        MenuHeading("账户");
         if (Cheevos::IsLoggedIn())
         {
           ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyle().Colors[ImGuiCol_Text]);
-          ActiveButton(SmallString::FromFormat(ICON_FA_USER "  Username: %s", Cheevos::GetUsername().c_str()), false,
+          ActiveButton(SmallString::FromFormat(ICON_FA_USER "  用户名: %s", Cheevos::GetUsername().c_str()), false,
                        false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
 
           Timestamp ts;
@@ -2390,40 +2390,40 @@ void DrawSettingsWindow()
                        false, false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
           ImGui::PopStyleColor();
 
-          if (MenuButton(ICON_FA_KEY "  Logout", "Logs out of RetroAchievements."))
+          if (MenuButton(ICON_FA_KEY "  注销", "注销RetroAchievement."))
             Cheevos::Logout();
         }
         else if (Cheevos::IsActive())
         {
-          ActiveButton(ICON_FA_USER "  Not Logged In", false, false,
+          ActiveButton(ICON_FA_USER "  未登录", false, false,
                        ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
 
-          if (MenuButton(ICON_FA_KEY "  Login", "Logs in to RetroAchievements."))
-            ImGui::OpenPopup("Achievements Login");
+          if (MenuButton(ICON_FA_KEY "  登录", "登录RetroAchievement."))
+            ImGui::OpenPopup("成就登录");
 
           DrawAchievementsLoginWindow();
         }
         else
         {
-          ActiveButton(ICON_FA_USER "  Achievements are disabled.", false, false,
+          ActiveButton(ICON_FA_USER "  成就被禁用.", false, false,
                        ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
         }
 
-        MenuHeading("Current Game");
+        MenuHeading("当前游戏");
         if (Cheevos::HasActiveGame())
         {
           ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImGui::GetStyle().Colors[ImGuiCol_Text]);
-          ActiveButton(TinyString::FromFormat(ICON_FA_BOOKMARK "  Game ID: %u", Cheevos::GetGameID()), false, false,
+          ActiveButton(TinyString::FromFormat(ICON_FA_BOOKMARK "  游戏ID: %u", Cheevos::GetGameID()), false, false,
                        ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
-          ActiveButton(TinyString::FromFormat(ICON_FA_BOOK "  Game Title: %s", Cheevos::GetGameTitle().c_str()), false,
+          ActiveButton(TinyString::FromFormat(ICON_FA_BOOK "  游戏标题: %s", Cheevos::GetGameTitle().c_str()), false,
                        false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
           ActiveButton(
-            TinyString::FromFormat(ICON_FA_DESKTOP "  Game Developer: %s", Cheevos::GetGameDeveloper().c_str()), false,
+            TinyString::FromFormat(ICON_FA_DESKTOP "  游戏开发人员: %s", Cheevos::GetGameDeveloper().c_str()), false,
             false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
           ActiveButton(
-            TinyString::FromFormat(ICON_FA_DESKTOP "  Game Publisher: %s", Cheevos::GetGamePublisher().c_str()), false,
+            TinyString::FromFormat(ICON_FA_DESKTOP "  游戏发行商: %s", Cheevos::GetGamePublisher().c_str()), false,
             false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
-          ActiveButton(TinyString::FromFormat(ICON_FA_TROPHY "  Achievements: %u (%u points)",
+          ActiveButton(TinyString::FromFormat(ICON_FA_TROPHY "  成就: %u (%u 点数)",
                                               Cheevos::GetAchievementCount(), Cheevos::GetMaximumPointsForGame()),
                        false, false, ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
 
@@ -2435,7 +2435,7 @@ void DrawSettingsWindow()
           }
           else
           {
-            ActiveButton(ICON_FA_MAP "  Rich presence inactive or unsupported.", false, false,
+            ActiveButton(ICON_FA_MAP "  丰富的状态不活动或不受支持.", false, false,
                          ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
           }
 
@@ -2443,14 +2443,14 @@ void DrawSettingsWindow()
         }
         else
         {
-          ActiveButton(ICON_FA_BAN "  Game not loaded or no RetroAchievements available.", false, false,
+          ActiveButton(ICON_FA_BAN "  游戏未加载或无RetroAchievement可用.", false, false,
                        ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
         }
 
         EndMenuButtons();
 #else
         BeginMenuButtons();
-        ActiveButton(ICON_FA_BAN "  This build was not compiled with RetroAchivements support.", false, false,
+        ActiveButton(ICON_FA_BAN "  此版本未使用RetroAcivements支持进行编译.", false, false,
                      ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
         EndMenuButtons();
 #endif
@@ -2463,105 +2463,105 @@ void DrawSettingsWindow()
       {
         BeginMenuButtons();
 
-        MenuHeading("Logging Settings");
+        MenuHeading("日志记录设置");
         settings_changed |=
-          EnumChoiceButton("Log Level", "Sets the verbosity of messages logged. Higher levels will log more messages.",
+          EnumChoiceButton("日志级别", "设置记录的消息的详细程度。更高级别将记录更多消息.",
                            &s_settings_copy.log_level, &Settings::GetLogLevelDisplayName, LOGLEVEL_COUNT);
-        settings_changed |= ToggleButton("Log To System Console", "Logs messages to the console window.",
+        settings_changed |= ToggleButton("登录到系统控制台", "将消息记录到控制台窗口.",
                                          &s_settings_copy.log_to_console);
-        settings_changed |= ToggleButton("Log To Debug Console", "Logs messages to the debug console where supported.",
+        settings_changed |= ToggleButton("日志到调试控制台", "将消息记录到支持的调试控制台.",
                                          &s_settings_copy.log_to_debug);
-        settings_changed |= ToggleButton("Log To File", "Logs messages to duckstation.log in the user directory.",
+        settings_changed |= ToggleButton("记录到文件", "将消息记录到duckstation。登录用户目录.",
                                          &s_settings_copy.log_to_file);
 
-        MenuHeading("Debugging Settings");
+        MenuHeading("调试设置");
 
         bool debug_menu = s_debug_menu_enabled;
-        if (ToggleButton("Enable Debug Menu", "Shows a debug menu bar with additional statistics and quick settings.",
+        if (ToggleButton("启用调试菜单", "显示带有其他统计信息和快速设置的调试菜单栏.",
                          &debug_menu))
         {
           s_host_interface->RunLater([debug_menu]() { SetDebugMenuEnabled(debug_menu); });
         }
 
         settings_changed |=
-          ToggleButton("Disable All Enhancements", "Temporarily disables all enhancements, useful when testing.",
+          ToggleButton("禁用所有增强功能", "暂时禁用所有增强功能，在测试时非常有用.",
                        &s_settings_copy.disable_all_enhancements);
 
         settings_changed |= ToggleButton(
-          "Use Debug GPU Device", "Enable debugging when supported by the host's renderer API. Only for developer use.",
+          "使用调试GPU设备", "在主机的渲染器API支持时启用调试。仅供开发者使用.",
           &s_settings_copy.gpu_use_debug_device);
 
 #ifdef _WIN32
         settings_changed |=
-          ToggleButton("Increase Timer Resolution", "Enables more precise frame pacing at the cost of battery life.",
+          ToggleButton("提高计时器分辨率", "以电池寿命为代价实现更精确的帧起搏.",
                        &s_settings_copy.increase_timer_resolution);
 #endif
 
-        settings_changed |= ToggleButtonForNonSetting("Allow Booting Without SBI File",
-                                                      "Allows loading protected games without subchannel information.",
+        settings_changed |= ToggleButtonForNonSetting("允许在没有SBI文件的情况下启动",
+                                                      "允许在没有子频道信息的情况下加载受保护的游戏.",
                                                       "CDROM", "AllowBootingWithoutSBIFile", false);
 
-        settings_changed |= ToggleButtonForNonSetting("Create Save State Backups",
-                                                      "Renames existing save states when saving to a backup file.",
+        settings_changed |= ToggleButtonForNonSetting("创建保存状态备份",
+                                                      "保存到备份文件时重命名现有的保存状态。",
                                                       "General", "CreateSaveStateBackups", false);
 
-        MenuHeading("Display Settings");
+        MenuHeading("显示设置");
         settings_changed |=
-          ToggleButton("Show Status Indicators", "Shows persistent icons when turbo is active or when paused.",
+          ToggleButton("显示状态指示器", "当turbo激活或暂停时显示持久图标.",
                        &g_settings.display_show_status_indicators);
-        settings_changed |= ToggleButton("Show Enhancement Settings",
-                                         "Shows enhancement settings in the bottom-right corner of the screen.",
+        settings_changed |= ToggleButton("显示增强设置",
+                                         "在屏幕右下角显示增强设置.",
                                          &g_settings.display_show_enhancements);
         settings_changed |= RangeButton(
-          "Display FPS Limit", "Limits how many frames are displayed to the screen. These frames are still rendered.",
+          "显示FPS限制", "限制屏幕上显示的帧数。这些帧仍被渲染.",
           &s_settings_copy.display_max_fps, 0.0f, 500.0f, 1.0f, "%.2f FPS");
 
-        MenuHeading("PGXP Settings");
+        MenuHeading("PGXP 设置");
 
         settings_changed |= ToggleButton(
-          "Enable PGXP Vertex Cache", "Uses screen positions to resolve PGXP data. May improve visuals in some games.",
+          "启用PGXP顶点缓存", "使用屏幕位置解析PGXP数据。可以改善某些游戏的视觉效果.",
           &s_settings_copy.gpu_pgxp_vertex_cache, s_settings_copy.gpu_pgxp_enable);
         settings_changed |= RangeButton(
-          "PGXP Geometry Tolerance",
-          "Sets a threshold for discarding precise values when exceeded. May help with glitches in some games.",
+          "PGXP 几何图形公差",
+          "设置超过时丢弃精确值的阈值。可能有助于解决某些游戏中的故障.",
           &s_settings_copy.gpu_pgxp_tolerance, -1.0f, 10.0f, 0.1f, "%.1f Pixels", s_settings_copy.gpu_pgxp_enable);
         settings_changed |= RangeButton(
-          "PGXP Depth Clear Threshold",
-          "Sets a threshold for discarding the emulated depth buffer. May help in some games.",
+          "PGXP 深度清除阈值",
+          "设置丢弃模拟深度缓冲区的阈值。在某些游戏中可能会有所帮助.",
           &s_settings_copy.gpu_pgxp_tolerance, 0.0f, 4096.0f, 1.0f, "%.1f", s_settings_copy.gpu_pgxp_enable);
 
-        MenuHeading("Texture Dumping/Replacements");
+        MenuHeading("纹理转储/替换");
 
-        settings_changed |= ToggleButton("Enable VRAM Write Texture Replacement",
-                                         "Enables the replacement of background textures in supported games.",
+        settings_changed |= ToggleButton("启用VRAM写入纹理替换",
+                                         "支持在支持的游戏中替换背景纹理.",
                                          &s_settings_copy.texture_replacements.enable_vram_write_replacements);
-        settings_changed |= ToggleButton("Preload Replacement Textures",
-                                         "Loads all replacement texture to RAM, reducing stuttering at runtime.",
+        settings_changed |= ToggleButton("预加载替换纹理",
+                                         "将所有替换纹理加载到RAM中，减少运行时的抖动.",
                                          &s_settings_copy.texture_replacements.preload_textures,
                                          s_settings_copy.texture_replacements.AnyReplacementsEnabled());
         settings_changed |=
-          ToggleButton("Dump Replacable VRAM Writes", "Writes textures which can be replaced to the dump directory.",
+          ToggleButton("转储可重复VRAM写入", "将可替换的纹理写入转储目录.",
                        &s_settings_copy.texture_replacements.dump_vram_writes);
         settings_changed |=
-          ToggleButton("Set VRAM Write Dump Alpha Channel", "Clears the mask/transparency bit in VRAM write dumps.",
+          ToggleButton("设置VRAM写转储Alpha通道", "清除VRAM写转储中的掩码/透明度位.",
                        &s_settings_copy.texture_replacements.dump_vram_write_force_alpha_channel,
                        s_settings_copy.texture_replacements.dump_vram_writes);
 
-        MenuHeading("CPU Emulation");
+        MenuHeading("CPU 模拟");
 
         settings_changed |=
-          ToggleButton("Enable Recompiler ICache",
-                       "Simulates the CPU's instruction cache in the recompiler. Can help with games running too fast.",
+          ToggleButton("启用复合编译器ICache",
+                       "在重新编译程序中模拟CPU的指令缓存。可以帮助游戏运行速度过快.",
                        &s_settings_copy.cpu_recompiler_icache);
-        settings_changed |= ToggleButton("Enable Recompiler Memory Exceptions",
-                                         "Enables alignment and bus exceptions. Not needed for any known games.",
+        settings_changed |= ToggleButton("启用重新编译器内存异常",
+                                         "启用对齐和总线异常。任何已知游戏都不需要.",
                                          &s_settings_copy.cpu_recompiler_memory_exceptions);
         settings_changed |= ToggleButton(
-          "Enable Recompiler Block Linking",
-          "Performance enhancement - jumps directly between blocks instead of returning to the dispatcher.",
+          "启用重新编译程序块链接",
+          "性能增强-直接在块之间跳转，而不是返回到调度器.",
           &s_settings_copy.cpu_recompiler_block_linking);
-        settings_changed |= EnumChoiceButton("Recompiler Fast Memory Access",
-                                             "Avoids calls to C++ code, significantly speeding up the recompiler.",
+        settings_changed |= EnumChoiceButton("重组器快速内存访问",
+                                             "避免了对C++代码的调用，大大加快了重新编译速度.",
                                              &s_settings_copy.cpu_fastmem_mode, &Settings::GetCPUFastmemModeDisplayName,
                                              CPUFastmemMode::Count, !s_settings_copy.cpu_recompiler_memory_exceptions);
 
@@ -2647,10 +2647,10 @@ void DrawQuickMenu(MainWindowType type)
                      ImGuiFullscreen::LAYOUT_MENU_BUTTON_Y_PADDING,
                      ImGuiFullscreen::LAYOUT_MENU_BUTTON_HEIGHT_NO_SUMMARY);
 
-    if (ActiveButton(ICON_FA_PLAY "  Resume Game", false) || WantsToCloseMenu())
+    if (ActiveButton(ICON_FA_PLAY "  重新进入游戏", false) || WantsToCloseMenu())
       CloseQuickMenu();
 
-    if (ActiveButton(ICON_FA_FAST_FORWARD "  Fast Forward", false))
+    if (ActiveButton(ICON_FA_FAST_FORWARD "  快进", false))
     {
       s_host_interface->RunLater(
         []() { s_host_interface->SetFastForwardEnabled(!s_host_interface->IsFastForwardEnabled()); });
@@ -2659,64 +2659,64 @@ void DrawQuickMenu(MainWindowType type)
 
 #ifdef WITH_CHEEVOS
     const bool achievements_enabled = Cheevos::HasActiveGame() && (Cheevos::GetAchievementCount() > 0);
-    if (ActiveButton(ICON_FA_TROPHY "  Achievements", false, achievements_enabled))
+    if (ActiveButton(ICON_FA_TROPHY "  成就", false, achievements_enabled))
       OpenAchievementsWindow();
 
     const bool leaderboards_enabled = Cheevos::HasActiveGame() && (Cheevos::GetLeaderboardCount() > 0);
-    if (ActiveButton(ICON_FA_STOPWATCH "  Leaderboards", false, leaderboards_enabled))
+    if (ActiveButton(ICON_FA_STOPWATCH "  排行榜", false, leaderboards_enabled))
       OpenLeaderboardsWindow();
 
 #else
-    ActiveButton(ICON_FA_TROPHY "  Achievements", false, false);
-    ActiveButton(ICON_FA_STOPWATCH "  Leaderboards", false, false);
+    ActiveButton(ICON_FA_TROPHY "  成就", false, false);
+    ActiveButton(ICON_FA_STOPWATCH "  游戏排行榜", false, false);
 #endif
 
-    if (ActiveButton(ICON_FA_CAMERA "  Save Screenshot", false))
+    if (ActiveButton(ICON_FA_CAMERA "  保存截图", false))
     {
       CloseQuickMenu();
       s_host_interface->RunLater([]() { s_host_interface->SaveScreenshot(); });
     }
 
-    if (ActiveButton(ICON_FA_UNDO "  Load State", false, !IsCheevosHardcoreModeActive()))
+    if (ActiveButton(ICON_FA_UNDO "  加载状态", false, !IsCheevosHardcoreModeActive()))
     {
       s_current_main_window = MainWindowType::None;
       OpenSaveStateSelector(true);
     }
 
-    if (ActiveButton(ICON_FA_SAVE "  Save State", false))
+    if (ActiveButton(ICON_FA_SAVE "  保存状态", false))
     {
       s_current_main_window = MainWindowType::None;
       OpenSaveStateSelector(false);
     }
 
-    if (ActiveButton(ICON_FA_FROWN_OPEN "  Cheat List", false, !IsCheevosHardcoreModeActive()))
+    if (ActiveButton(ICON_FA_FROWN_OPEN "  作弊列表", false, !IsCheevosHardcoreModeActive()))
     {
       s_current_main_window = MainWindowType::None;
       DoCheatsMenu();
     }
 
-    if (ActiveButton(ICON_FA_GAMEPAD "  Toggle Analog", false))
+    if (ActiveButton(ICON_FA_GAMEPAD "  切换模拟", false))
     {
       CloseQuickMenu();
       DoToggleAnalogMode();
     }
 
-    if (ActiveButton(ICON_FA_COMPACT_DISC "  Change Disc", false))
+    if (ActiveButton(ICON_FA_COMPACT_DISC "  更改光盘", false))
     {
       s_current_main_window = MainWindowType::None;
       DoChangeDisc();
     }
 
-    if (ActiveButton(ICON_FA_SLIDERS_H "  Settings", false))
+    if (ActiveButton(ICON_FA_SLIDERS_H "  设置(非专业人员慎用)", false))
       s_current_main_window = MainWindowType::Settings;
 
-    if (ActiveButton(ICON_FA_SYNC "  Reset System", false))
+    if (ActiveButton(ICON_FA_SYNC "  重置系统", false))
     {
       CloseQuickMenu();
       s_host_interface->RunLater(DoReset);
     }
 
-    if (ActiveButton(ICON_FA_POWER_OFF "  Exit Game", false))
+    if (ActiveButton(ICON_FA_POWER_OFF "  退出游戏", false))
     {
       CloseQuickMenu();
       s_host_interface->RunLater(DoPowerOff);
@@ -2731,12 +2731,12 @@ void DrawQuickMenu(MainWindowType type)
 void InitializePlaceholderSaveStateListEntry(SaveStateListEntry* li, s32 slot, bool global)
 {
   if (global)
-    li->title = StringUtil::StdStringFromFormat("Global Slot %d##global_slot_%d", slot, slot);
+    li->title = StringUtil::StdStringFromFormat("全局插槽 %d##global_slot_%d", slot, slot);
   else
     li->title =
-      StringUtil::StdStringFromFormat("%s Slot %d##game_slot_%d", System::GetRunningTitle().c_str(), slot, slot);
+      StringUtil::StdStringFromFormat("%s 插槽 %d##game_slot_%d", System::GetRunningTitle().c_str(), slot, slot);
 
-  li->summary = "No Save State";
+  li->summary = "无保存状态";
 
   std::string().swap(li->path);
   std::string().swap(li->media_path);
@@ -2749,15 +2749,15 @@ void InitializeSaveStateListEntry(SaveStateListEntry* li, CommonHostInterface::E
   if (ssi->global)
   {
     li->title =
-      StringUtil::StdStringFromFormat("Global Save %d - %s##global_slot_%d", ssi->slot, ssi->title.c_str(), ssi->slot);
+      StringUtil::StdStringFromFormat("全局保存 %d - %s##global_slot_%d", ssi->slot, ssi->title.c_str(), ssi->slot);
   }
   else
   {
-    li->title = StringUtil::StdStringFromFormat("%s Slot %d##game_slot_%d", ssi->title.c_str(), ssi->slot, ssi->slot);
+    li->title = StringUtil::StdStringFromFormat("%s 插槽 %d##game_slot_%d", ssi->title.c_str(), ssi->slot, ssi->slot);
   }
 
   li->summary =
-    StringUtil::StdStringFromFormat("%s - Saved %s", ssi->game_code.c_str(),
+    StringUtil::StdStringFromFormat("%s - 保存 %s", ssi->game_code.c_str(),
                                     Timestamp::FromUnixTimestamp(ssi->timestamp).ToString("%c").GetCharArray());
 
   li->slot = ssi->slot;
@@ -2780,7 +2780,7 @@ void InitializeSaveStateListEntry(SaveStateListEntry* li, CommonHostInterface::E
   }
 
   if (!li->preview_texture)
-    Log_ErrorPrintf("Failed to upload save state image to GPU");
+    Log_ErrorPrintf("无法将保存状态图像上载到GPU");
 }
 
 void PopulateSaveStateListEntries()
@@ -2794,8 +2794,8 @@ void PopulateSaveStateListEntries()
     {
       SaveStateListEntry li;
       InitializeSaveStateListEntry(&li, &ssi.value());
-      li.title = "Undo Load State";
-      li.summary = "Restores the state of the system prior to the last state loaded.";
+      li.title = "撤消加载状态";
+      li.summary = "恢复上次加载状态之前的系统状态.";
       s_save_state_selector_slots.push_back(std::move(li));
     }
   }
@@ -2920,7 +2920,7 @@ void DrawSaveStateSelector(bool is_loading, bool fullscreen)
   }
   else
   {
-    const char* window_title = is_loading ? "Load State" : "Save State";
+    const char* window_title = is_loading ? "加载状态" : "保存状态";
 
     ImGui::PushFont(g_large_font);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, LayoutScale(10.0f));
@@ -3163,7 +3163,7 @@ void DrawGameListWindow()
       ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 15.0f);
 
       // region
-      ImGui::TextUnformatted("Region: ");
+      ImGui::TextUnformatted("区域: ");
       ImGui::SameLine();
       ImGui::Image(s_disc_region_textures[static_cast<u32>(selected_entry->region)]->GetHandle(),
                    LayoutScale(23.0f, 16.0f));
@@ -3171,15 +3171,15 @@ void DrawGameListWindow()
       ImGui::Text(" (%s)", Settings::GetDiscRegionDisplayName(selected_entry->region));
 
       // genre
-      ImGui::Text("Genre: %s", selected_entry->genre.c_str());
+      ImGui::Text("类型: %s", selected_entry->genre.c_str());
 
       // release date
       char release_date_str[64];
       selected_entry->GetReleaseDateString(release_date_str, sizeof(release_date_str));
-      ImGui::Text("Release Date: %s", release_date_str);
+      ImGui::Text("发布日期: %s", release_date_str);
 
       // compatibility
-      ImGui::TextUnformatted("Compatibility: ");
+      ImGui::TextUnformatted("兼容性: ");
       ImGui::SameLine();
       ImGui::Image(s_game_compatibility_textures[static_cast<u32>(selected_entry->compatibility_rating)]->GetHandle(),
                    LayoutScale(64.0f, 16.0f));
@@ -3187,21 +3187,21 @@ void DrawGameListWindow()
       ImGui::Text(" (%s)", GameList::GetGameListCompatibilityRatingString(selected_entry->compatibility_rating));
 
       // size
-      ImGui::Text("Size: %.2f MB", static_cast<float>(selected_entry->total_size) / 1048576.0f);
+      ImGui::Text("大小: %.2f MB", static_cast<float>(selected_entry->total_size) / 1048576.0f);
 
       // game settings
       const u32 user_setting_count = selected_entry->settings.GetUserSettingsCount();
       if (user_setting_count > 0)
-        ImGui::Text("%u Per-Game Settings Set", user_setting_count);
+        ImGui::Text("%u 每游戏设置集", user_setting_count);
       else
-        ImGui::TextUnformatted("No Per-Game Settings Set");
+        ImGui::TextUnformatted("未设置每游戏设置");
 
       ImGui::PopFont();
     }
     else
     {
       // title
-      const char* title = "No Game Selected";
+      const char* title = "未选择游戏";
       ImGui::PushFont(g_large_font);
       text_width = ImGui::CalcTextSize(title, nullptr, false, work_width).x;
       ImGui::SetCursorPosX((work_width - text_width) / 2.0f);
@@ -3214,7 +3214,7 @@ void DrawGameListWindow()
 
     ImGui::SetCursorPosY(ImGui::GetWindowHeight() - LayoutScale(50.0f));
     BeginMenuButtons();
-    if (ActiveButton(ICON_FA_BACKWARD "  Back", false))
+    if (ActiveButton(ICON_FA_BACKWARD "  返回", false))
       ReturnToMainWindow();
     EndMenuButtons();
   }
@@ -3327,21 +3327,21 @@ void DrawAboutWindow()
 {
   ImGui::SetNextWindowSize(LayoutScale(1000.0f, 500.0f));
   ImGui::SetNextWindowPos(ImGui::GetIO().DisplaySize * 0.5f, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
-  ImGui::OpenPopup("About DuckStation");
+  ImGui::OpenPopup("关于DuckStation");
 
   ImGui::PushFont(g_large_font);
   ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, LayoutScale(10.0f));
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, LayoutScale(10.0f, 10.0f));
 
-  if (ImGui::BeginPopupModal("About DuckStation", &s_about_window_open,
+  if (ImGui::BeginPopupModal("关于DuckStation", &s_about_window_open,
                              ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize))
   {
-    ImGui::TextWrapped("DuckStation is a free and open-source simulator/emulator of the Sony PlayStation(TM) console, "
-                       "focusing on playability, speed, and long-term maintainability.");
+    ImGui::TextWrapped("DuckStation是Sony PlayStation（TM）控制台的免费开源模拟器/仿真器, "
+                       "注重可玩性、速度和长期可维护性.");
     ImGui::NewLine();
-    ImGui::TextWrapped("Contributor List: https://github.com/stenzek/duckstation/blob/master/CONTRIBUTORS.md");
+    ImGui::TextWrapped("参与者列表: https://github.com/stenzek/duckstation/blob/master/CONTRIBUTORS.md");
     ImGui::NewLine();
-    ImGui::TextWrapped("Duck icon by icons8 (https://icons8.com/icon/74847/platforms.undefined.short-title)");
+    ImGui::TextWrapped("鸭子图标8 (https://icons8.com/icon/74847/platforms.undefined.short-title)");
     ImGui::NewLine();
     ImGui::TextWrapped("\"PlayStation\" and \"PSX\" are registered trademarks of Sony Interactive Entertainment Europe "
                        "Limited. This software is not affiliated in any way with Sony Interactive Entertainment.");
@@ -3364,7 +3364,7 @@ void DrawAboutWindow()
       s_host_interface->RunLater([]() { s_host_interface->ReportError("Go to https://discord.gg/Buktv3t"); });
     }
 
-    if (ActiveButton(ICON_FA_WINDOW_CLOSE "  Close", false))
+    if (ActiveButton(ICON_FA_WINDOW_CLOSE "  关闭", false))
     {
       ImGui::CloseCurrentPopup();
       s_about_window_open = false;
@@ -3386,13 +3386,13 @@ bool DrawErrorWindow(const char* message)
 
   ImGui::SetNextWindowSize(LayoutScale(500.0f, 0.0f));
   ImGui::SetNextWindowPos(ImGui::GetIO().DisplaySize * 0.5f, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
-  ImGui::OpenPopup("ReportError");
+  ImGui::OpenPopup("报告错误");
 
   ImGui::PushFont(g_large_font);
   ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, LayoutScale(10.0f));
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, LayoutScale(10.0f, 10.0f));
 
-  if (ImGui::BeginPopupModal("ReportError", &is_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize))
+  if (ImGui::BeginPopupModal("报告错误", &is_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize))
   {
     ImGui::SetCursorPos(LayoutScale(LAYOUT_MENU_BUTTON_X_PADDING, LAYOUT_MENU_BUTTON_Y_PADDING));
     ImGui::TextWrapped("%s", message);
@@ -3400,7 +3400,7 @@ bool DrawErrorWindow(const char* message)
 
     BeginMenuButtons();
 
-    if (ActiveButton(ICON_FA_WINDOW_CLOSE "  Close", false))
+    if (ActiveButton(ICON_FA_WINDOW_CLOSE "  关闭", false))
     {
       ImGui::CloseCurrentPopup();
       is_open = false;
@@ -3425,13 +3425,13 @@ bool DrawConfirmWindow(const char* message, bool* result)
 
   ImGui::SetNextWindowSize(LayoutScale(500.0f, 0.0f));
   ImGui::SetNextWindowPos(ImGui::GetIO().DisplaySize * 0.5f, ImGuiCond_Always, ImVec2(0.5f, 0.5f));
-  ImGui::OpenPopup("ConfirmMessage");
+  ImGui::OpenPopup("确认消息");
 
   ImGui::PushFont(g_large_font);
   ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, LayoutScale(10.0f));
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, LayoutScale(10.0f, 10.0f));
 
-  if (ImGui::BeginPopupModal("ConfirmMessage", &is_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize))
+  if (ImGui::BeginPopupModal("确认消息", &is_open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize))
   {
     ImGui::SetCursorPos(LayoutScale(LAYOUT_MENU_BUTTON_X_PADDING, LAYOUT_MENU_BUTTON_Y_PADDING));
     ImGui::TextWrapped("%s", message);
@@ -3513,13 +3513,13 @@ void DrawDebugMenu()
   if (!ImGui::BeginMainMenuBar())
     return;
 
-  if (ImGui::BeginMenu("System"))
+  if (ImGui::BeginMenu("系统"))
   {
     DrawDebugSystemMenu();
     ImGui::EndMenu();
   }
 
-  if (ImGui::BeginMenu("Settings"))
+  if (ImGui::BeginMenu("设置"))
   {
     DrawDebugSettingsMenu();
     ImGui::EndMenu();
@@ -3546,20 +3546,20 @@ void DrawDebugStats()
     if (System::IsPaused())
     {
       ImGui::SetCursorPosX(framebuffer_width - (50.0f * framebuffer_scale));
-      ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Paused");
+      ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "已暂停");
     }
     else
     {
       const auto [display_width, display_height] = g_gpu->GetEffectiveDisplayResolution();
       ImGui::SetCursorPosX(framebuffer_width - (580.0f * framebuffer_scale));
       ImGui::Text("%ux%u (%s)", display_width, display_height,
-                  g_gpu->IsInterlacedDisplayEnabled() ? "interlaced" : "progressive");
+                  g_gpu->IsInterlacedDisplayEnabled() ? "交错" : "进步");
 
       ImGui::SetCursorPosX(framebuffer_width - (420.0f * framebuffer_scale));
-      ImGui::Text("Average: %.2fms", System::GetAverageFrameTime());
+      ImGui::Text("平均: %.2fms", System::GetAverageFrameTime());
 
       ImGui::SetCursorPosX(framebuffer_width - (310.0f * framebuffer_scale));
-      ImGui::Text("Worst: %.2fms", System::GetWorstFrameTime());
+      ImGui::Text("最差的: %.2fms", System::GetWorstFrameTime());
 
       ImGui::SetCursorPosX(framebuffer_width - (210.0f * framebuffer_scale));
 
@@ -3585,13 +3585,13 @@ void DrawDebugSystemMenu()
 {
   const bool system_enabled = static_cast<bool>(!System::IsShutdown());
 
-  if (ImGui::MenuItem("Start Disc", nullptr, false, !system_enabled))
+  if (ImGui::MenuItem("启动光盘", nullptr, false, !system_enabled))
   {
     DoStartFile();
     ClearImGuiFocus();
   }
 
-  if (ImGui::MenuItem("Start BIOS", nullptr, false, !system_enabled))
+  if (ImGui::MenuItem("启动BIOS", nullptr, false, !system_enabled))
   {
     DoStartBIOS();
     ClearImGuiFocus();
@@ -3599,19 +3599,19 @@ void DrawDebugSystemMenu()
 
   ImGui::Separator();
 
-  if (ImGui::MenuItem("Power Off", nullptr, false, system_enabled))
+  if (ImGui::MenuItem("关闭电源", nullptr, false, system_enabled))
   {
     DoPowerOff();
     ClearImGuiFocus();
   }
 
-  if (ImGui::MenuItem("Reset", nullptr, false, system_enabled))
+  if (ImGui::MenuItem("重置", nullptr, false, system_enabled))
   {
     DoReset();
     ClearImGuiFocus();
   }
 
-  if (ImGui::MenuItem("Pause", nullptr, System::IsPaused(), system_enabled))
+  if (ImGui::MenuItem("暂停", nullptr, System::IsPaused(), system_enabled))
   {
     DoPause();
     ClearImGuiFocus();
@@ -3619,13 +3619,13 @@ void DrawDebugSystemMenu()
 
   ImGui::Separator();
 
-  if (ImGui::MenuItem("Change Disc", nullptr, false, system_enabled))
+  if (ImGui::MenuItem("更改光盘", nullptr, false, system_enabled))
   {
     DoChangeDisc();
     ClearImGuiFocus();
   }
 
-  if (ImGui::MenuItem("Remove Disc", nullptr, false, system_enabled))
+  if (ImGui::MenuItem("删除光盘", nullptr, false, system_enabled))
   {
     s_host_interface->RunLater([]() { System::RemoveMedia(); });
     ClearImGuiFocus();
@@ -3633,12 +3633,12 @@ void DrawDebugSystemMenu()
 
   ImGui::Separator();
 
-  if (ImGui::BeginMenu("Load State", !IsCheevosHardcoreModeActive()))
+  if (ImGui::BeginMenu("加载状态", !IsCheevosHardcoreModeActive()))
   {
     for (u32 i = 1; i <= CommonHostInterface::GLOBAL_SAVE_STATE_SLOTS; i++)
     {
       char buf[16];
-      std::snprintf(buf, sizeof(buf), "State %u", i);
+      std::snprintf(buf, sizeof(buf), "状态 %u", i);
       if (ImGui::MenuItem(buf))
       {
         s_host_interface->RunLater([i]() { s_host_interface->LoadState(true, i); });
@@ -3648,12 +3648,12 @@ void DrawDebugSystemMenu()
     ImGui::EndMenu();
   }
 
-  if (ImGui::BeginMenu("Save State", system_enabled))
+  if (ImGui::BeginMenu("保存状态", system_enabled))
   {
     for (u32 i = 1; i <= CommonHostInterface::GLOBAL_SAVE_STATE_SLOTS; i++)
     {
       TinyString buf;
-      buf.Format("State %u", i);
+      buf.Format("状态 %u", i);
       if (ImGui::MenuItem(buf))
       {
         s_host_interface->RunLater([i]() { s_host_interface->SaveState(true, i); });
@@ -3665,10 +3665,10 @@ void DrawDebugSystemMenu()
 
   ImGui::Separator();
 
-  if (ImGui::BeginMenu("Cheats", system_enabled && !IsCheevosHardcoreModeActive()))
+  if (ImGui::BeginMenu("作弊", system_enabled && !IsCheevosHardcoreModeActive()))
   {
     const bool has_cheat_file = System::HasCheatList();
-    if (ImGui::BeginMenu("Enabled Cheats", has_cheat_file))
+    if (ImGui::BeginMenu("启用作弊", has_cheat_file))
     {
       CheatList* cl = System::GetCheatList();
       for (u32 i = 0; i < cl->GetCodeCount(); i++)
@@ -3681,7 +3681,7 @@ void DrawDebugSystemMenu()
       ImGui::EndMenu();
     }
 
-    if (ImGui::BeginMenu("Apply Cheat", has_cheat_file))
+    if (ImGui::BeginMenu("应用作弊", has_cheat_file))
     {
       CheatList* cl = System::GetCheatList();
       for (u32 i = 0; i < cl->GetCodeCount(); i++)
@@ -3699,7 +3699,7 @@ void DrawDebugSystemMenu()
 
   ImGui::Separator();
 
-  if (ImGui::MenuItem("Exit"))
+  if (ImGui::MenuItem("退出"))
     s_host_interface->RequestExit();
 }
 
@@ -3707,7 +3707,7 @@ void DrawDebugSettingsMenu()
 {
   bool settings_changed = false;
 
-  if (ImGui::BeginMenu("CPU Execution Mode"))
+  if (ImGui::BeginMenu("CPU执行模式"))
   {
     const CPUExecutionMode current = s_settings_copy.cpu_execution_mode;
     for (u32 i = 0; i < static_cast<u32>(CPUExecutionMode::Count); i++)
@@ -3723,13 +3723,13 @@ void DrawDebugSettingsMenu()
     ImGui::EndMenu();
   }
 
-  if (ImGui::MenuItem("CPU Clock Control", nullptr, &s_settings_copy.cpu_overclock_enable))
+  if (ImGui::MenuItem("CPU时钟控制", nullptr, &s_settings_copy.cpu_overclock_enable))
   {
     settings_changed = true;
     s_settings_copy.UpdateOverclockActive();
   }
 
-  if (ImGui::BeginMenu("CPU Clock Speed"))
+  if (ImGui::BeginMenu("CPU时钟速度"))
   {
     static constexpr auto values = make_array(10u, 25u, 50u, 75u, 100u, 125u, 150u, 175u, 200u, 225u, 250u, 275u, 300u,
                                               350u, 400u, 450u, 500u, 600u, 700u, 800u);
@@ -3748,10 +3748,10 @@ void DrawDebugSettingsMenu()
   }
 
   settings_changed |=
-    ImGui::MenuItem("Recompiler Memory Exceptions", nullptr, &s_settings_copy.cpu_recompiler_memory_exceptions);
+    ImGui::MenuItem("重编译器内存异常", nullptr, &s_settings_copy.cpu_recompiler_memory_exceptions);
   settings_changed |=
-    ImGui::MenuItem("Recompiler Block Linking", nullptr, &s_settings_copy.cpu_recompiler_block_linking);
-  if (ImGui::BeginMenu("Recompiler Fastmem"))
+    ImGui::MenuItem("重新编译块链接", nullptr, &s_settings_copy.cpu_recompiler_block_linking);
+  if (ImGui::BeginMenu("重组器Fastmem"))
   {
     for (u32 i = 0; i < static_cast<u32>(CPUFastmemMode::Count); i++)
     {
@@ -3766,11 +3766,11 @@ void DrawDebugSettingsMenu()
     ImGui::EndMenu();
   }
 
-  settings_changed |= ImGui::MenuItem("Recompiler ICache", nullptr, &s_settings_copy.cpu_recompiler_icache);
+  settings_changed |= ImGui::MenuItem("重新编译iCache", nullptr, &s_settings_copy.cpu_recompiler_icache);
 
   ImGui::Separator();
 
-  if (ImGui::BeginMenu("Renderer"))
+  if (ImGui::BeginMenu("渲染器"))
   {
     const GPURenderer current = s_settings_copy.gpu_renderer;
     for (u32 i = 0; i < static_cast<u32>(GPURenderer::Count); i++)
@@ -3783,20 +3783,20 @@ void DrawDebugSettingsMenu()
       }
     }
 
-    settings_changed |= ImGui::MenuItem("GPU on Thread", nullptr, &s_settings_copy.gpu_use_thread);
+    settings_changed |= ImGui::MenuItem("线程上的GPU", nullptr, &s_settings_copy.gpu_use_thread);
 
     ImGui::EndMenu();
   }
 
-  if (ImGui::MenuItem("Toggle Fullscreen"))
+  if (ImGui::MenuItem("切换全屏"))
     s_host_interface->RunLater([] { s_host_interface->SetFullscreen(!s_host_interface->IsFullscreen()); });
 
-  if (ImGui::BeginMenu("Resize to Game", System::IsValid()))
+  if (ImGui::BeginMenu("根据游戏调整大小", System::IsValid()))
   {
     static constexpr auto scales = make_array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     for (const u32 scale : scales)
     {
-      if (ImGui::MenuItem(TinyString::FromFormat("%ux Scale", scale)))
+      if (ImGui::MenuItem(TinyString::FromFormat("%ux 规模", scale)))
         s_host_interface->RunLater(
           [scale]() { s_host_interface->RequestRenderWindowScale(static_cast<float>(scale)); });
     }
@@ -3808,7 +3808,7 @@ void DrawDebugSettingsMenu()
 
   ImGui::Separator();
 
-  if (ImGui::BeginMenu("Resolution Scale"))
+  if (ImGui::BeginMenu("分辨率比例"))
   {
     const u32 current_internal_resolution = s_settings_copy.gpu_resolution_scale;
     for (u32 scale = 1; scale <= GPU::MAX_RESOLUTION_SCALE; scale++)
@@ -3826,12 +3826,12 @@ void DrawDebugSettingsMenu()
     ImGui::EndMenu();
   }
 
-  if (ImGui::BeginMenu("Multisampling"))
+  if (ImGui::BeginMenu("多重采样"))
   {
     const u32 current_multisamples = s_settings_copy.gpu_multisamples;
     const bool current_ssaa = s_settings_copy.gpu_per_sample_shading;
 
-    if (ImGui::MenuItem("None", nullptr, (current_multisamples == 1)))
+    if (ImGui::MenuItem("没有", nullptr, (current_multisamples == 1)))
     {
       s_settings_copy.gpu_multisamples = 1;
       s_settings_copy.gpu_per_sample_shading = false;
@@ -3869,26 +3869,26 @@ void DrawDebugSettingsMenu()
 
   if (ImGui::BeginMenu("PGXP"))
   {
-    settings_changed |= ImGui::MenuItem("PGXP Enabled", nullptr, &s_settings_copy.gpu_pgxp_enable);
+    settings_changed |= ImGui::MenuItem("PGXP 启用", nullptr, &s_settings_copy.gpu_pgxp_enable);
     settings_changed |=
-      ImGui::MenuItem("PGXP Culling", nullptr, &s_settings_copy.gpu_pgxp_culling, s_settings_copy.gpu_pgxp_enable);
-    settings_changed |= ImGui::MenuItem("PGXP Texture Correction", nullptr,
+      ImGui::MenuItem("PGXP 消隐", nullptr, &s_settings_copy.gpu_pgxp_culling, s_settings_copy.gpu_pgxp_enable);
+    settings_changed |= ImGui::MenuItem("PGXP 纹理校正", nullptr,
                                         &s_settings_copy.gpu_pgxp_texture_correction, s_settings_copy.gpu_pgxp_enable);
-    settings_changed |= ImGui::MenuItem("PGXP Vertex Cache", nullptr, &s_settings_copy.gpu_pgxp_vertex_cache,
+    settings_changed |= ImGui::MenuItem("PGXP 顶点缓存", nullptr, &s_settings_copy.gpu_pgxp_vertex_cache,
                                         s_settings_copy.gpu_pgxp_enable);
     settings_changed |=
-      ImGui::MenuItem("PGXP CPU Instructions", nullptr, &s_settings_copy.gpu_pgxp_cpu, s_settings_copy.gpu_pgxp_enable);
-    settings_changed |= ImGui::MenuItem("PGXP Preserve Projection Precision", nullptr,
+      ImGui::MenuItem("PGXP CPU 说明书", nullptr, &s_settings_copy.gpu_pgxp_cpu, s_settings_copy.gpu_pgxp_enable);
+    settings_changed |= ImGui::MenuItem("PGXP 保持投影精度", nullptr,
                                         &s_settings_copy.gpu_pgxp_preserve_proj_fp, s_settings_copy.gpu_pgxp_enable);
-    settings_changed |= ImGui::MenuItem("PGXP Depth Buffer", nullptr, &s_settings_copy.gpu_pgxp_depth_buffer,
+    settings_changed |= ImGui::MenuItem("PGXP 深度缓冲", nullptr, &s_settings_copy.gpu_pgxp_depth_buffer,
                                         s_settings_copy.gpu_pgxp_enable);
     ImGui::EndMenu();
   }
 
-  settings_changed |= ImGui::MenuItem("True (24-Bit) Color", nullptr, &s_settings_copy.gpu_true_color);
-  settings_changed |= ImGui::MenuItem("Scaled Dithering", nullptr, &s_settings_copy.gpu_scaled_dithering);
+  settings_changed |= ImGui::MenuItem("真（24位）颜色", nullptr, &s_settings_copy.gpu_true_color);
+  settings_changed |= ImGui::MenuItem("缩放抖动", nullptr, &s_settings_copy.gpu_scaled_dithering);
 
-  if (ImGui::BeginMenu("Texture Filtering"))
+  if (ImGui::BeginMenu("纹理过滤"))
   {
     const GPUTextureFilter current = s_settings_copy.gpu_texture_filter;
     for (u32 i = 0; i < static_cast<u32>(GPUTextureFilter::Count); i++)
@@ -3906,17 +3906,17 @@ void DrawDebugSettingsMenu()
 
   ImGui::Separator();
 
-  settings_changed |= ImGui::MenuItem("Disable Interlacing", nullptr, &s_settings_copy.gpu_disable_interlacing);
-  settings_changed |= ImGui::MenuItem("Widescreen Hack", nullptr, &s_settings_copy.gpu_widescreen_hack);
-  settings_changed |= ImGui::MenuItem("Force NTSC Timings", nullptr, &s_settings_copy.gpu_force_ntsc_timings);
-  settings_changed |= ImGui::MenuItem("24-Bit Chroma Smoothing", nullptr, &s_settings_copy.gpu_24bit_chroma_smoothing);
+  settings_changed |= ImGui::MenuItem("禁用隔行扫描", nullptr, &s_settings_copy.gpu_disable_interlacing);
+  settings_changed |= ImGui::MenuItem("宽屏黑客", nullptr, &s_settings_copy.gpu_widescreen_hack);
+  settings_changed |= ImGui::MenuItem("强制NTSC计时", nullptr, &s_settings_copy.gpu_force_ntsc_timings);
+  settings_changed |= ImGui::MenuItem("24位色度平滑", nullptr, &s_settings_copy.gpu_24bit_chroma_smoothing);
 
   ImGui::Separator();
 
-  settings_changed |= ImGui::MenuItem("Display Linear Filtering", nullptr, &s_settings_copy.display_linear_filtering);
-  settings_changed |= ImGui::MenuItem("Display Integer Scaling", nullptr, &s_settings_copy.display_integer_scaling);
+  settings_changed |= ImGui::MenuItem("显示线性过滤", nullptr, &s_settings_copy.display_linear_filtering);
+  settings_changed |= ImGui::MenuItem("显示整数缩放", nullptr, &s_settings_copy.display_integer_scaling);
 
-  if (ImGui::BeginMenu("Aspect Ratio"))
+  if (ImGui::BeginMenu("纵横比"))
   {
     for (u32 i = 0; i < static_cast<u32>(DisplayAspectRatio::Count); i++)
     {
@@ -3931,7 +3931,7 @@ void DrawDebugSettingsMenu()
     ImGui::EndMenu();
   }
 
-  if (ImGui::BeginMenu("Crop Mode"))
+  if (ImGui::BeginMenu("裁剪模式"))
   {
     for (u32 i = 0; i < static_cast<u32>(DisplayCropMode::Count); i++)
     {
@@ -3946,7 +3946,7 @@ void DrawDebugSettingsMenu()
     ImGui::EndMenu();
   }
 
-  if (ImGui::BeginMenu("Downsample Mode"))
+  if (ImGui::BeginMenu("降采样模式"))
   {
     for (u32 i = 0; i < static_cast<u32>(GPUDownsampleMode::Count); i++)
     {
@@ -3961,11 +3961,11 @@ void DrawDebugSettingsMenu()
     ImGui::EndMenu();
   }
 
-  settings_changed |= ImGui::MenuItem("Force 4:3 For 24-bit", nullptr, &s_settings_copy.display_force_4_3_for_24bit);
+  settings_changed |= ImGui::MenuItem("24位强制4:3", nullptr, &s_settings_copy.display_force_4_3_for_24bit);
 
   ImGui::Separator();
 
-  if (ImGui::MenuItem("Dump Audio", nullptr, s_host_interface->IsDumpingAudio(), System::IsValid()))
+  if (ImGui::MenuItem("转储音频", nullptr, s_host_interface->IsDumpingAudio(), System::IsValid()))
   {
     if (!s_host_interface->IsDumpingAudio())
       s_host_interface->StartDumpingAudio();
@@ -3973,7 +3973,7 @@ void DrawDebugSettingsMenu()
       s_host_interface->StopDumpingAudio();
   }
 
-  if (ImGui::MenuItem("Save Screenshot"))
+  if (ImGui::MenuItem("保存截图"))
     s_host_interface->RunLater([]() { s_host_interface->SaveScreenshot(); });
 
   if (settings_changed)
@@ -3986,7 +3986,7 @@ void DrawDebugDebugMenu()
   Settings::DebugSettings& debug_settings = g_settings.debugging;
   bool settings_changed = false;
 
-  if (ImGui::BeginMenu("Log Level"))
+  if (ImGui::BeginMenu("日志级别"))
   {
     for (u32 i = LOGLEVEL_NONE; i < LOGLEVEL_COUNT; i++)
     {
@@ -4007,11 +4007,11 @@ void DrawDebugDebugMenu()
 
   ImGui::Separator();
 
-  settings_changed |= ImGui::MenuItem("Disable All Enhancements", nullptr, &s_settings_copy.disable_all_enhancements);
-  settings_changed |= ImGui::MenuItem("Dump CPU to VRAM Copies", nullptr, &debug_settings.dump_cpu_to_vram_copies);
-  settings_changed |= ImGui::MenuItem("Dump VRAM to CPU Copies", nullptr, &debug_settings.dump_vram_to_cpu_copies);
+  settings_changed |= ImGui::MenuItem("禁用所有增强功能", nullptr, &s_settings_copy.disable_all_enhancements);
+  settings_changed |= ImGui::MenuItem("将CPU转储到VRAM副本", nullptr, &debug_settings.dump_cpu_to_vram_copies);
+  settings_changed |= ImGui::MenuItem("将VRAM转储到CPU副本", nullptr, &debug_settings.dump_vram_to_cpu_copies);
 
-  if (ImGui::MenuItem("CPU Trace Logging", nullptr, CPU::IsTraceEnabled(), system_valid))
+  if (ImGui::MenuItem("CPU跟踪日志", nullptr, CPU::IsTraceEnabled(), system_valid))
   {
     if (!CPU::IsTraceEnabled())
       CPU::StartTrace();
@@ -4021,13 +4021,13 @@ void DrawDebugDebugMenu()
 
   ImGui::Separator();
 
-  settings_changed |= ImGui::MenuItem("Show VRAM", nullptr, &debug_settings.show_vram);
-  settings_changed |= ImGui::MenuItem("Show GPU State", nullptr, &debug_settings.show_gpu_state);
-  settings_changed |= ImGui::MenuItem("Show CDROM State", nullptr, &debug_settings.show_cdrom_state);
-  settings_changed |= ImGui::MenuItem("Show SPU State", nullptr, &debug_settings.show_spu_state);
-  settings_changed |= ImGui::MenuItem("Show Timers State", nullptr, &debug_settings.show_timers_state);
-  settings_changed |= ImGui::MenuItem("Show MDEC State", nullptr, &debug_settings.show_mdec_state);
-  settings_changed |= ImGui::MenuItem("Show DMA State", nullptr, &debug_settings.show_dma_state);
+  settings_changed |= ImGui::MenuItem("显示VRAM", nullptr, &debug_settings.show_vram);
+  settings_changed |= ImGui::MenuItem("显示GPU状态", nullptr, &debug_settings.show_gpu_state);
+  settings_changed |= ImGui::MenuItem("显示CDROM状态", nullptr, &debug_settings.show_cdrom_state);
+  settings_changed |= ImGui::MenuItem("显示SPU状态", nullptr, &debug_settings.show_spu_state);
+  settings_changed |= ImGui::MenuItem("显示计时器状态", nullptr, &debug_settings.show_timers_state);
+  settings_changed |= ImGui::MenuItem("显示MDEC状态", nullptr, &debug_settings.show_mdec_state);
+  settings_changed |= ImGui::MenuItem("显示DMA状态", nullptr, &debug_settings.show_dma_state);
 
   if (settings_changed)
   {
@@ -4207,7 +4207,7 @@ void DrawAchievementWindow()
       text.Assign(Cheevos::GetGameTitle());
 
       if (Cheevos::IsChallengeModeActive())
-        text.AppendString(" (Hardcore Mode)");
+        text.AppendString(" (硬核模式)");
 
       top += g_large_font->FontSize + spacing;
 
@@ -4219,11 +4219,11 @@ void DrawAchievementWindow()
       const ImRect summary_bb(ImVec2(left, top), ImVec2(right, top + g_medium_font->FontSize));
       if (unlocked_count == achievement_count)
       {
-        text.Format("You have unlocked all achievements and earned %u points!", total_points);
+        text.Format("您已解锁所有成就并获得 %u 分！", total_points);
       }
       else
       {
-        text.Format("You have unlocked %u of %u achievements, earning %u of %u possible points.", unlocked_count,
+        text.Format("您已解锁 %u 项成就（共 %u 项），获得 %u 项可能的积分。", unlocked_count,
                     achievement_count, current_points, total_points);
       }
 
@@ -4258,14 +4258,14 @@ void DrawAchievementWindow()
   ImGui::SetNextWindowBgAlpha(alpha);
 
   if (BeginFullscreenWindow(ImVec2(0.0f, heading_height), ImVec2(display_size.x, display_size.y - heading_height),
-                            "achievements", background, 0.0f, 0.0f, 0))
+                            "成就", background, 0.0f, 0.0f, 0))
   {
     BeginMenuButtons();
 
     static bool unlocked_achievements_collapsed = false;
 
     unlocked_achievements_collapsed ^= MenuHeadingButton(
-      "Unlocked Achievements", unlocked_achievements_collapsed ? ICON_FA_CHEVRON_DOWN : ICON_FA_CHEVRON_UP);
+      "解锁成就", unlocked_achievements_collapsed ? ICON_FA_CHEVRON_DOWN : ICON_FA_CHEVRON_UP);
     if (!unlocked_achievements_collapsed)
     {
       Cheevos::EnumerateAchievements([](const Cheevos::Achievement& cheevo) -> bool {
@@ -4280,7 +4280,7 @@ void DrawAchievementWindow()
     {
       static bool locked_achievements_collapsed = false;
       locked_achievements_collapsed ^= MenuHeadingButton(
-        "Locked Achievements", locked_achievements_collapsed ? ICON_FA_CHEVRON_DOWN : ICON_FA_CHEVRON_UP);
+        "锁定的成就", locked_achievements_collapsed ? ICON_FA_CHEVRON_DOWN : ICON_FA_CHEVRON_UP);
       if (!locked_achievements_collapsed)
       {
         Cheevos::EnumerateAchievements([](const Cheevos::Achievement& cheevo) -> bool {
@@ -4520,7 +4520,7 @@ void DrawLeaderboardsWindow()
       }
       else
       {
-        text.Format("This game has %u leaderboards.", leaderboard_count);
+        text.Format("此游戏有 %u 个排行榜.", leaderboard_count);
       }
 
       const ImRect summary_bb(ImVec2(left, top), ImVec2(right, top + g_medium_font->FontSize));
@@ -4537,7 +4537,7 @@ void DrawLeaderboardsWindow()
 
         ImGui::RenderTextClipped(
           hardcore_warning_bb.Min, hardcore_warning_bb.Max,
-          "Submitting scores is DISABLED because Hardcore Mode is off. Leaderboards are read-only.", nullptr, nullptr,
+          "提交分数是禁用的，因为硬核模式是关闭的。排行榜是只读的.", nullptr, nullptr,
           ImVec2(0.0f, 0.0f), &hardcore_warning_bb);
       }
 
@@ -4591,7 +4591,7 @@ void DrawLeaderboardsWindow()
   if (!is_leaderboard_open)
   {
     if (BeginFullscreenWindow(ImVec2(0.0f, heading_height), ImVec2(display_size.x, display_size.y - heading_height),
-                              "leaderboards", background, 0.0f, 0.0f, 0))
+                              "游戏排行榜", background, 0.0f, 0.0f, 0))
     {
       BeginMenuButtons();
 
@@ -4608,7 +4608,7 @@ void DrawLeaderboardsWindow()
   else
   {
     if (BeginFullscreenWindow(ImVec2(0.0f, heading_height), ImVec2(display_size.x, display_size.y - heading_height),
-                              "leaderboard", background, 0.0f, 0.0f, 0))
+                              "排行榜", background, 0.0f, 0.0f, 0))
     {
       BeginMenuButtons();
 
@@ -4625,7 +4625,7 @@ void DrawLeaderboardsWindow()
 
         const ImVec2 pos_min(0.0f, heading_height);
         const ImVec2 pos_max(display_size.x, display_size.y);
-        ImGui::RenderTextClipped(pos_min, pos_max, "Downloading leaderboard data, please wait...", nullptr, nullptr,
+        ImGui::RenderTextClipped(pos_min, pos_max, "正在下载排行榜数据，请稍候...", nullptr, nullptr,
                                  ImVec2(0.5f, 0.5f));
 
         ImGui::PopFont();
