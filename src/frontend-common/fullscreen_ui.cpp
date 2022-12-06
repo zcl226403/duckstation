@@ -4258,7 +4258,7 @@ void DrawAchievementWindow()
   ImGui::SetNextWindowBgAlpha(alpha);
 
   if (BeginFullscreenWindow(ImVec2(0.0f, heading_height), ImVec2(display_size.x, display_size.y - heading_height),
-                            "成就", background, 0.0f, 0.0f, 0))
+                            "achievements", background, 0.0f, 0.0f, 0))
   {
     BeginMenuButtons();
 
@@ -4591,7 +4591,7 @@ void DrawLeaderboardsWindow()
   if (!is_leaderboard_open)
   {
     if (BeginFullscreenWindow(ImVec2(0.0f, heading_height), ImVec2(display_size.x, display_size.y - heading_height),
-                              "游戏排行榜", background, 0.0f, 0.0f, 0))
+                              "leaderboards", background, 0.0f, 0.0f, 0))
     {
       BeginMenuButtons();
 
@@ -4608,7 +4608,7 @@ void DrawLeaderboardsWindow()
   else
   {
     if (BeginFullscreenWindow(ImVec2(0.0f, heading_height), ImVec2(display_size.x, display_size.y - heading_height),
-                              "排行榜", background, 0.0f, 0.0f, 0))
+                              "leaderboard", background, 0.0f, 0.0f, 0))
     {
       BeginMenuButtons();
 
